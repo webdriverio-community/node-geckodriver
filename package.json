@@ -1,0 +1,25 @@
+{
+  "name": "geckodriver",
+  "version": "1.0.0",
+  "description": "Downloader for https://github.com/mozilla/geckodriver/releases",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava",
+    "postinstall": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladikoff/node-geckodriver.git"
+  },
+  "author": "",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/vladikoff/node-geckodriver/issues"
+  },
+  "homepage": "https://github.com/vladikoff/node-geckodriver#readme",
+  "dependencies": {
+    "got": "5.6.0",
+    "tar.gz": "1.0.5",
+    "ava": "0.15.2"
+  }
+}
