@@ -1,6 +1,6 @@
 {
   "name": "geckodriver",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Downloader for https://github.com/mozilla/geckodriver/releases",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,9 @@
   "homepage": "https://github.com/vladikoff/node-geckodriver#readme",
   "dependencies": {
     "got": "5.6.0",
-    "tar.gz": "1.0.5",
+    "tar.gz": "1.0.5"
+  },
+  "devDependencies": {
     "ava": "0.15.2"
   }
 }
