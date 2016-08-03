@@ -1,8 +1,15 @@
-## node-geckodriver
+## node-geckodriver [![Build Status](https://travis-ci.org/vladikoff/node-geckodriver.svg?branch=master)](https://travis-ci.org/vladikoff/node-geckodriver)
 
-> Downloader for https://github.com/mozilla/geckodriver/releases
+> Downloader for [github.com/mozilla/geckodriver/releases](https://github.com/mozilla/geckodriver/releases)
 
-Puts `geckodriver` or `geckodriver.exe` into root if this module.
+This puts `geckodriver` or `geckodriver.exe` into root if this module.
+
+## Usage
+
+```
+npm install geckodriver
+```
+
 Use it by setting WebDriver capabilities:
 
 ```
