@@ -4,15 +4,40 @@
 
 This puts `geckodriver` or `geckodriver.exe` into root if this module.
 
-## Usage
+## Install
 
 ```
 npm install geckodriver
 ```
 
-Use it by setting WebDriver capabilities:
+## Usage
+
+There are several ways to use this module:
+
+### Use the provided `geckodriver` from `bin` directory.
+
+```
+bin/geckodriver [args]
+```
+
+### Use it by requiring:
+
+```
+require('geckodriver');
+```
+
+### Use it by setting WebDriver capabilities:
 
 ```
 profile.setPreference('marionette', true);
 profile.setPreference('webdriver.gecko.driver', require('path').join(__dirname, '..', 'node_modules', 'geckodriver', 'geckodriver');
 ```
+
+## Related Projects
+
+* [node-chromedriver](https://github.com/giggio/node-chromedriver)
+
+## Changelog
+
+* 1.1.0 - programmatic usage, added `bin` support.
+* 1.0.0 - init release
