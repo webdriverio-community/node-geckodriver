@@ -39,5 +39,5 @@ profile.setPreference('webdriver.gecko.driver', require('path').join(__dirname, 
 
 ## Changelog
 
-1.1.0 - programmatic usage, added `bin` support.
-1.0.0 - init release
+* 1.1.0 - programmatic usage, added `bin` support.
+* 1.0.0 - init release
