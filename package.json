@@ -1,6 +1,6 @@
 {
   "name": "geckodriver",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Downloader for https://github.com/mozilla/geckodriver/releases",
   "scripts": {
     "test": "ava",
