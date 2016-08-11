@@ -30,7 +30,8 @@ require('geckodriver');
 
 ```
 profile.setPreference('marionette', true);
-profile.setPreference('webdriver.gecko.driver', require('path').join(__dirname, '..', 'node_modules', 'geckodriver', 'geckodriver');
+// Add log level if needed:
+// profile.setPreference('marionette.logging', 'TRACE');
 ```
 
 ## Related Projects
