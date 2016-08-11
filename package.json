@@ -2,7 +2,6 @@
   "name": "geckodriver",
   "version": "1.1.1",
   "description": "Downloader for https://github.com/mozilla/geckodriver/releases",
-  "main": "index.js",
   "scripts": {
     "test": "ava",
     "postinstall": "node index.js"
@@ -16,6 +15,7 @@
     "email": "vlad.filippov@gmail.com",
     "url": "http://vf.io"
   },
+  "main": "lib/geckodriver",
   "bin": {
     "geckodriver": "./bin/geckodriver"
   },

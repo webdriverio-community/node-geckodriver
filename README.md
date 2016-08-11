@@ -39,5 +39,6 @@ profile.setPreference('webdriver.gecko.driver', require('path').join(__dirname, 
 
 ## Changelog
 
+* 1.1.2 - fixed `require` by pointing `package.json main` property to the `lib` file.
 * 1.1.0 - programmatic usage, added `bin` support.
 * 1.0.0 - init release
