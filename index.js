@@ -4,6 +4,9 @@ var path = require('path');
 
 var got = require('got');
 var targz = require('tar.gz');
+var AdmZip = require('adm-zip');
+
+var Promise = require('bluebird');
 
 var platform = os.platform();
 
@@ -31,7 +34,7 @@ got.stream(downloadUrl)
   .pipe(fs.createWriteStream(outFile))
   .on('close', function() {
     process.stdout.write('Extracting... ');
-    targz().extract(path.join(__dirname, outFile), __dirname)
+    extract(path.join(__dirname, outFile), __dirname)
       .then(function(){
         console.log('Complete.');
       })
@@ -39,3 +42,21 @@ got.stream(downloadUrl)
         console.log('Something is wrong ', err.stack);
       });
   });
+
+function extract(archivePath, targetDirectoryPath) {
+  if (outFile.indexOf('.tar.gz') >= 0) {
+    return targz().extract(archivePath, targetDirectoryPath);
+  }
+
+  else if (outFile.indexOf('.zip') >= 0) {
+    return Promise.resolve()
+      .then(function () {
+        new AdmZip(archivePath)
+          .extractAllTo(targetDirectoryPath);
+      });
+  }
+
+  else {
+    return Promise.reject('This archive extension is not supported: ' + archivePath);
+  }
+}
