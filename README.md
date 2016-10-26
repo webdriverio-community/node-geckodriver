@@ -38,8 +38,15 @@ profile.setPreference('marionette', true);
 
 * [node-chromedriver](https://github.com/giggio/node-chromedriver)
 
+## Versions
+
+* [npm module version] - [geckodriver version]
+* 1.2.x - geckodriver 0.11.1
+* 1.1.x - geckodriver 0.10
+
 ## Changelog
 
+* 1.2.0 - updated to geckodriver 0.11.1.
 * 1.1.3 - adds Windows support, fixes Windows tests.
 * 1.1.2 - fixed `require` by pointing `package.json main` property to the `lib` file.
 * 1.1.0 - programmatic usage, added `bin` support.
