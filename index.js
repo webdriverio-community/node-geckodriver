@@ -10,9 +10,9 @@ var Promise = require('bluebird');
 
 var platform = os.platform();
 
-var DOWNLOAD_MAC = 'https://github.com/mozilla/geckodriver/releases/download/v0.10.0/geckodriver-v0.10.0-macos.tar.gz';
-var DOWNLOAD_LINUX = 'https://github.com/mozilla/geckodriver/releases/download/v0.10.0/geckodriver-v0.10.0-linux64.tar.gz';
-var DOWNLOAD_WIN = 'https://github.com/mozilla/geckodriver/releases/download/v0.10.0/geckodriver-v0.10.0-win64.zip';
+var DOWNLOAD_MAC = 'https://github.com/mozilla/geckodriver/releases/download/v0.11.1/geckodriver-v0.11.1-macos.tar.gz';
+var DOWNLOAD_LINUX = 'https://github.com/mozilla/geckodriver/releases/download/v0.11.1/geckodriver-v0.11.1-linux64.tar.gz';
+var DOWNLOAD_WIN = 'https://github.com/mozilla/geckodriver/releases/download/v0.11.1/geckodriver-v0.11.1-win64.zip';
 
 // TODO: move this to package.json or something
 var downloadUrl = DOWNLOAD_MAC;
