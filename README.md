@@ -46,6 +46,7 @@ profile.setPreference('marionette', true);
 
 ## Changelog
 
+* 1.2.1 - added support for Linux 32-bit.
 * 1.2.0 - updated to geckodriver 0.11.1.
 * 1.1.3 - adds Windows support, fixes Windows tests.
 * 1.1.2 - fixed `require` by pointing `package.json main` property to the `lib` file.
