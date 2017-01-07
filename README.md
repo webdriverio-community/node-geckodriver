@@ -2,7 +2,7 @@
 
 > Downloader for [github.com/mozilla/geckodriver/releases](https://github.com/mozilla/geckodriver/releases)
 
-This puts `geckodriver` or `geckodriver.exe` into root if this module.
+This puts `geckodriver` or `geckodriver.exe` into root of this module.
 
 ## Install
 
