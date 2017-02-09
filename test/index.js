@@ -14,5 +14,5 @@ test.cb('properly extracts', t => {
 
 test('programmatic usage', t => {
   var driver = require('../lib/geckodriver')
-  t.is(driver.version, '0.10')
+  t.is(driver.version, '0.14')
 });
