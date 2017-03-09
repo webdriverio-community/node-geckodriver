@@ -41,12 +41,16 @@ profile.setPreference('marionette', true);
 ## Versions
 
 * [npm module version] - [geckodriver version]
+* 1.5.x - geckodriver 0.15.0
+* 1.4.x - geckodriver 0.14.0
 * 1.3.x - geckodriver 0.13.0
 * 1.2.x - geckodriver 0.11.1
 * 1.1.x - geckodriver 0.10
 
 ## Changelog
 
+* 1.5.0 - updated to geckodriver 0.15.0.
+* 1.4.0 - updated to geckodriver 0.14.0.
 * 1.3.0 - updated to geckodriver 0.13.0.
 * 1.2.1 - added support for Linux 32-bit.
 * 1.2.0 - updated to geckodriver 0.11.1.
