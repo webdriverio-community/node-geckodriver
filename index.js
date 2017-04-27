@@ -11,11 +11,11 @@ var Promise = require('bluebird');
 var platform = os.platform();
 var arch = os.arch();
 
-var DOWNLOAD_MAC = 'https://github.com/mozilla/geckodriver/releases/download/v0.16.0/geckodriver-v0.16.0-macos.tar.gz';
-var DOWNLOAD_LINUX64 = 'https://github.com/mozilla/geckodriver/releases/download/v0.16.0/geckodriver-v0.16.0-linux64.tar.gz';
-var DOWNLOAD_LINUX32 = 'https://github.com/mozilla/geckodriver/releases/download/v0.16.0/geckodriver-v0.16.0-linux32.tar.gz';
-var DOWNLOAD_WIN32 = 'https://github.com/mozilla/geckodriver/releases/download/v0.16.0/geckodriver-v0.16.0-win32.zip';
-var DOWNLOAD_WIN64 = 'https://github.com/mozilla/geckodriver/releases/download/v0.16.0/geckodriver-v0.16.0-win64.zip';
+var DOWNLOAD_MAC = 'https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-macos.tar.gz';
+var DOWNLOAD_LINUX64 = 'https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-linux64.tar.gz';
+var DOWNLOAD_LINUX32 = 'https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-linux32.tar.gz';
+var DOWNLOAD_WIN32 = 'https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-win32.zip';
+var DOWNLOAD_WIN64 = 'https://github.com/mozilla/geckodriver/releases/download/v0.16.1/geckodriver-v0.16.1-win64.zip';
 
 // TODO: move this to package.json or something
 var downloadUrl = DOWNLOAD_MAC;
