@@ -34,6 +34,16 @@ profile.setPreference('marionette', true);
 // profile.setPreference('marionette.logging', 'TRACE');
 ```
 
+## Setting a CDN URL for binary download
+
+To set an alternate CDN location for geckodriver binaries, set the `GECKODRIVER_CDNURL` like this:
+
+```
+GECKODRIVER_CDNURL=https://INTERNAL_CDN/geckodriver/download
+```
+
+Binaries on your CDN should be located in a subdirectory of the above base URL. For example, `/vxx.xx.xx/*.tar.gz` should be located under `/geckodriver/download` above.
+
 ## Related Projects
 
 * [node-chromedriver](https://github.com/giggio/node-chromedriver)
