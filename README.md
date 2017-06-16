@@ -61,6 +61,7 @@ Binaries on your CDN should be located in a subdirectory of the above base URL. 
 
 ## Changelog
 
+* 1.7.1 - 'GECKODRIVER_CDNURL' support added.
 * 1.7.0 - updated to geckodriver 0.17.0  32-bit linux support added.
 * 1.6.1 - updated to geckodriver 0.16.1
 * 1.6.0 - updated to geckodriver 0.16.0. 32-bit linux support removed.
