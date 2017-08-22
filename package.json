@@ -17,7 +17,8 @@
   },
   "main": "lib/geckodriver",
   "bin": {
-    "geckodriver": "./bin/geckodriver"
+    "geckodriver": "./bin/geckodriver",
+    "geckodriver.exe": "./bin/geckodriver"
   },
   "license": "MPL-2.0",
   "bugs": {
