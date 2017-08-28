@@ -1,6 +1,7 @@
 var os = require('os');
 var fs = require('fs');
 var path = require('path');
+var spawnSync = require('child_process').spawnSync;
 
 var got = require('got');
 var targz = require('tar.gz');
@@ -43,6 +44,11 @@ got.stream(downloadUrl)
   .on('close', function() {
     process.stdout.write('Extracting... ');
     extract(path.join(__dirname, outFile), __dirname)
+      .then(function() {
+        if (platform === 'win32') {
+          return copyExecutable();
+        }
+      })
       .then(function(){
         console.log('Complete.');
       })
@@ -67,4 +73,31 @@ function extract(archivePath, targetDirectoryPath) {
   else {
     return Promise.reject('This archive extension is not supported: ' + archivePath);
   }
+}
+
+function copyExecutable() {
+  process.stdout.write('Copying... ');
+
+  var exeDir;
+
+  try {
+    exeDir = spawnSync('npm.cmd', ['bin', '-g'], { encoding: 'utf8' }).stdout.trim();
+  } catch(ex) {
+    process.stderr.write(ex);
+  }
+
+  if (exeDir) {
+    return copyFile(path.join(__dirname, executable), path.join(exeDir, executable));
+  }
+}
+
+function copyFile(source, target) {
+  return new Promise(function(resolve, reject) {
+    var readStream = fs.createReadStream(source);
+    readStream.on("error", reject);
+    var writeStream = fs.createWriteStream(target);
+    writeStream.on("error", reject);
+    writeStream.on("close", resolve);
+    readStream.pipe(writeStream);
+  });
 }
