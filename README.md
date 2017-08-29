@@ -34,6 +34,19 @@ profile.setPreference('marionette', true);
 // profile.setPreference('marionette.logging', 'TRACE');
 ```
 
+### Use it globally:
+
+```
+npm install -g geckodriver
+geckodriver [args]
+```
+
+Note: This installs a `geckodriver` shell script that runs the executable, but on Windows, selenium-webdriver looks for `geckodriver.exe`. To use a global installation of this package with selenium-webdriver on Windows, copy or link `geckodriver.exe` to a location on your PATH (such as the NPM bin directory) after installing this package:
+
+```
+>mklink %USERPROFILE%\AppData\Roaming\npm\geckodriver.exe %USERPROFILE%\AppData\Roaming\npm\node_modules\geckodriver\geckodriver.exe
+```
+
 ## Setting a CDN URL for binary download
 
 To set an alternate CDN location for geckodriver binaries, set the `GECKODRIVER_CDNURL` like this:
