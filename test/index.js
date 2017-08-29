@@ -6,7 +6,12 @@ test.cb('properly extracts', t => {
     if (error) {
       return t.fail(`exec error: ${error}`)
     }
-    t.is(stdout, 'Downloading geckodriver... Extracting... Complete.\n');
+    if (process.platform() === 'win32') {
+      t.is(stdout, 'Downloading geckodriver... Extracting... Copying... Complete.\n');
+    }
+    else {
+      t.is(stdout, 'Downloading geckodriver... Extracting... Complete.\n');
+    }
     t.is(stderr, '');
     t.end();
   });
