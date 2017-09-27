@@ -16,11 +16,11 @@ var baseCDNURL = process.env.GECKODRIVER_CDNURL || 'https://github.com/mozilla/g
 // Remove trailing slash if included
 baseCDNURL = baseCDNURL.replace(/\/+$/, '');
 
-var DOWNLOAD_MAC = baseCDNURL + '/v0.18.0/geckodriver-v0.18.0-macos.tar.gz';
-var DOWNLOAD_LINUX64 = baseCDNURL + '/v0.18.0/geckodriver-v0.18.0-linux64.tar.gz';
-var DOWNLOAD_LINUX32 = baseCDNURL + '/v0.18.0/geckodriver-v0.18.0-linux32.tar.gz';
-var DOWNLOAD_WIN32 = baseCDNURL + '/v0.18.0/geckodriver-v0.18.0-win32.zip';
-var DOWNLOAD_WIN64 = baseCDNURL + '/v0.18.0/geckodriver-v0.18.0-win64.zip';
+var DOWNLOAD_MAC = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-macos.tar.gz';
+var DOWNLOAD_LINUX64 = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-linux64.tar.gz';
+var DOWNLOAD_LINUX32 = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-linux32.tar.gz';
+var DOWNLOAD_WIN32 = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-win32.zip';
+var DOWNLOAD_WIN64 = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-win64.zip';
 
 // TODO: move this to package.json or something
 var downloadUrl = DOWNLOAD_MAC;
@@ -32,7 +32,8 @@ if (platform === 'linux') {
 }
 
 if (platform === 'win32') {
-  downloadUrl = arch === 'x64' ? DOWNLOAD_WIN64 : DOWNLOAD_WIN32;
+  // No 32-bits of geckodriver for now
+  downloadUrl = arch === 'x64' ? DOWNLOAD_WIN64 : DOWNLOAD_WIN64;
   outFile = 'geckodriver.zip';
   executable = 'geckodriver.exe';
 }

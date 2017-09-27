@@ -64,6 +64,7 @@ Binaries on your CDN should be located in a subdirectory of the above base URL. 
 ## Versions
 
 * [npm module version] - [geckodriver version]
+* 1.9.x - geckodriver 0.19.0
 * 1.8.x - geckodriver 0.18.0
 * 1.7.x - geckodriver 0.17.0
 * 1.6.x - geckodriver 0.16.1
@@ -75,6 +76,7 @@ Binaries on your CDN should be located in a subdirectory of the above base URL. 
 
 ## Changelog
 
+* 1.9.0 - updated to geckodriver 0.19.0 32-bit windows support removed.
 * 1.8.1 - added geckodriver.exe bin for Windows
 * 1.8.0 - updated to geckodriver 0.18.0
 * 1.7.1 - 'GECKODRIVER_CDNURL' support added.
