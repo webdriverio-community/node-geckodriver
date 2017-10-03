@@ -17,11 +17,11 @@ var baseCDNURL = process.env.npm_config_geckodriver_cdnurl || process.env.GECKOD
 // Remove trailing slash if included
 baseCDNURL = baseCDNURL.replace(/\/+$/, '');
 
-  var DOWNLOAD_MAC = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-macos.tar.gz';
-  var DOWNLOAD_LINUX64 = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-linux64.tar.gz';
-  var DOWNLOAD_LINUX32 = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-linux32.tar.gz';
-  var DOWNLOAD_WIN32 = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-win32.zip';
-  var DOWNLOAD_WIN64 = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-win64.zip';
+var DOWNLOAD_MAC = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-macos.tar.gz';
+var DOWNLOAD_LINUX64 = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-linux64.tar.gz';
+var DOWNLOAD_LINUX32 = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-linux32.tar.gz';
+var DOWNLOAD_WIN32 = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-win32.zip';
+var DOWNLOAD_WIN64 = baseCDNURL + '/v0.19.0/geckodriver-v0.19.0-win64.zip';
 
 // TODO: move this to package.json or something
 var downloadUrl = DOWNLOAD_MAC;
