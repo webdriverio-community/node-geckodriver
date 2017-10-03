@@ -6,8 +6,7 @@ test.cb('properly extracts', t => {
     if (error) {
       return t.fail(`exec error: ${error}`)
     }
-    let regx = 'Downloading geckodriver from (?:(http[s]?):\/\/)?([^:\/\s]+)(:[0-9]+)?((?:\/\w+)*\/)([\w\-\.]+[^#?\s]+)([^#\s]*)?(#[\w\-]+)? geckodriver.tar.gz to (\/*)(.*)(...)\/node-geckodriver...\\nComplete.\\n'
-    t.regex(stdout,  regx);
+    t.is(stdout, 'Downloading geckodriver from https://github.com/mozilla/geckodriver/releases/download/v0.19.0/geckodriver-v0.19.0-linux64.tar.gz...\nExtracting geckodriver.tar.gz to /home/travis/build/vladikoff/node-geckodriver...\nComplete.\n');
     t.is(stderr, '');
     t.end();
   });
