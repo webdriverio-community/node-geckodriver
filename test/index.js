@@ -6,7 +6,7 @@ test.cb('properly extracts', t => {
     if (error) {
       return t.fail(`exec error: ${error}`)
     }
-    t.regex(stdout, /Downloading geckodriver from (.*)Extracting geckodriver.tar.gz to (*)...\nComplete.\n/);
+    t.regex(stdout, /Downloading geckodriver from (.*)Extracting geckodriver.tar.gz to (.*)...\nComplete.\n/);
     t.is(stderr, '');
     t.end();
   });
