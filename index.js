@@ -11,7 +11,8 @@ var Promise = require('bluebird');
 var platform = os.platform();
 var arch = os.arch();
 
-var baseCDNURL = process.env.GECKODRIVER_CDNURL || 'https://github.com/mozilla/geckodriver/releases/download';
+// order -> npmrc first, environment var second, defaults to github last.
+var baseCDNURL = process.env.npm_config_geckodriver_cdnurl || process.env.GECKODRIVER_CDNURL || 'https://github.com/mozilla/geckodriver/releases/download';
 
 // Remove trailing slash if included
 baseCDNURL = baseCDNURL.replace(/\/+$/, '');
@@ -38,11 +39,11 @@ if (platform === 'win32') {
   executable = 'geckodriver.exe';
 }
 
-process.stdout.write('Downloading geckodriver... ');
+process.stdout.write(`Downloading geckodriver from ${downloadUrl}...\n`);
 got.stream(downloadUrl)
   .pipe(fs.createWriteStream(outFile))
   .on('close', function() {
-    process.stdout.write('Extracting... ');
+    process.stdout.write(`Extracting ${outFile} to ${__dirname}...\n`);
     extract(path.join(__dirname, outFile), __dirname)
       .then(function(){
         console.log('Complete.');

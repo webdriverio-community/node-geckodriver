@@ -54,6 +54,12 @@ To set an alternate CDN location for geckodriver binaries, set the `GECKODRIVER_
 ```
 GECKODRIVER_CDNURL=https://INTERNAL_CDN/geckodriver/download
 ```
+Alternatively, you can add the property to your `.npmrc` as :
+```
+GECKODRIVER_CDNURL=https://INTERNAL_CDN/geckodriver/download
+```
+
+Default location is set to https://github.com/mozilla/geckodriver/releases/download
 
 Binaries on your CDN should be located in a subdirectory of the above base URL. For example, `/vxx.xx.xx/*.tar.gz` should be located under `/geckodriver/download` above.
 
