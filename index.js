@@ -12,7 +12,7 @@ var Promise = require('bluebird');
 var platform = os.platform();
 var arch = os.arch();
 
-var baseCDNURL = process.env.GECKODRIVER_CDNURL || 'https://github.com/mozilla/geckodriver/releases/download';
+var baseCDNURL = process.env.GECKODRIVER_CDNURL || process.env.npm_config_geckodriver_cdnurl || 'https://github.com/mozilla/geckodriver/releases/download';
 
 // Remove trailing slash if included
 baseCDNURL = baseCDNURL.replace(/\/+$/, '');
