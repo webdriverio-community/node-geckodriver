@@ -1,6 +1,7 @@
 var os = require('os');
 var fs = require('fs');
 var path = require('path');
+var url = require('url');
 
 var got = require('got');
 var targz = require('tar.gz');
@@ -39,7 +40,7 @@ if (platform === 'win32') {
 }
 
 process.stdout.write('Downloading geckodriver... ');
-got.stream(downloadUrl)
+got.stream(url.parse(downloadUrl))
   .pipe(fs.createWriteStream(outFile))
   .on('close', function() {
     process.stdout.write('Extracting... ');
