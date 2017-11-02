@@ -57,6 +57,10 @@ GECKODRIVER_CDNURL=https://INTERNAL_CDN/geckodriver/download
 
 Binaries on your CDN should be located in a subdirectory of the above base URL. For example, `/vxx.xx.xx/*.tar.gz` should be located under `/geckodriver/download` above.
 
+Alternatively, you can add the same property to your `.npmrc` file.
+
+Default location is set to https://github.com/mozilla/geckodriver/releases/download
+
 ## Related Projects
 
 * [node-chromedriver](https://github.com/giggio/node-chromedriver)
