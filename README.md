@@ -81,7 +81,7 @@ Default location is set to https://github.com/mozilla/geckodriver/releases/downl
 
 ## Changelog
 
-* 1.10.0 - geckodriver 0.19.1, switch tar package, enable Win32 builds again
+* 1.10.0 - geckodriver 0.19.1, switch tar package, enable Win32 builds again, process.env.npm_config_geckodriver_cdnurl support
 * 1.9.0 - updated to geckodriver 0.19.0 32-bit windows support removed.
 * 1.8.1 - added geckodriver.exe bin for Windows
 * 1.8.0 - updated to geckodriver 0.18.0
