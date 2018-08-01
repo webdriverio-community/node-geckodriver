@@ -6,6 +6,7 @@ var url = require('url');
 var got = require('got');
 var tar = require('tar');
 var AdmZip = require('adm-zip');
+var proxyAgent = require('https-proxy-agent');
 
 var Promise = require('bluebird');
 
@@ -28,6 +29,12 @@ var downloadUrl = DOWNLOAD_MAC;
 var outFile = 'geckodriver.tar.gz';
 var executable = 'geckodriver';
 
+var downloadOptions = {}
+var proxy = process.env.HTTPS_PROXY || process.env.HTTP_PROXY || null;
+if (proxy !== null) {
+  downloadOptions.agent = new proxyAgent(proxy);
+}
+
 if (platform === 'linux') {
   downloadUrl = arch === 'x64' ? DOWNLOAD_LINUX64 : DOWNLOAD_LINUX32;
 }
@@ -40,21 +47,21 @@ if (platform === 'win32') {
 }
 
 process.stdout.write('Downloading geckodriver... ');
-got.stream(url.parse(downloadUrl))
+got.stream(url.parse(downloadUrl), downloadOptions)
   .pipe(fs.createWriteStream(outFile))
-  .on('close', function() {
+  .on('close', function () {
     process.stdout.write('Extracting... ');
     extract(path.join(__dirname, outFile), __dirname)
-      .then(function(){
+      .then(function () {
         console.log('Complete.');
       })
-      .catch(function(err){
+      .catch(function (err) {
         console.log('Something is wrong ', err.stack);
       });
   });
 
 function extract(archivePath, targetDirectoryPath) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     if (outFile.indexOf('.tar.gz') >= 0) {
       tar.extract({
         file: archivePath,
