@@ -61,6 +61,10 @@ Alternatively, you can add the same property to your `.npmrc` file.
 
 Default location is set to https://github.com/mozilla/geckodriver/releases/download
 
+## Setting a PROXY URL
+
+Use `HTTPS_PROXY` or `HTTP_PROXY` to set your proxy url.
+
 ## Related Projects
 
 * [node-chromedriver](https://github.com/giggio/node-chromedriver)
@@ -83,6 +87,7 @@ Default location is set to https://github.com/mozilla/geckodriver/releases/downl
 
 ## Changelog
 
+* 1.12.2 - add proxy settings
 * 1.12.1 - adm-zip security fix
 * 1.12.0 - geckodriver 0.21.0
 * 1.11.0 - geckodriver 0.20.0
