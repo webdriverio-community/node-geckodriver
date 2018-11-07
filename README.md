@@ -72,6 +72,7 @@ Use `HTTPS_PROXY` or `HTTP_PROXY` to set your proxy url.
 ## Versions
 
 * [npm module version] - [geckodriver version]
+* 1.14.x - geckodriver 0.23.0
 * 1.13.x - geckodriver 0.22.0
 * 1.12.x - geckodriver 0.21.0
 * 1.11.x - geckodriver 0.20.0
@@ -88,6 +89,7 @@ Use `HTTPS_PROXY` or `HTTP_PROXY` to set your proxy url.
 
 ## Changelog
 
+* 1.14.0 - geckodriver 0.23.0
 * 1.13.0 - geckodriver 0.22.0
 * 1.12.2 - add proxy settings
 * 1.12.1 - adm-zip security fix
