@@ -4,3 +4,4 @@ node_modules
 *.tar.gz
 *.log
 yarn.lock
+lib/version
