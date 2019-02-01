@@ -21,7 +21,7 @@ var baseCDNURL =
 // Remove trailing slash if included
 baseCDNURL = baseCDNURL.replace(/\/+$/, '');
 
-var latestVersion = 'v0.23.0';
+var latestVersion = 'v0.24.0';
 var downloadUrl;
 var outFile;
 var executable;
