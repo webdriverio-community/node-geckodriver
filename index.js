@@ -39,8 +39,13 @@ async function fetchLatestVersionNumber() {
   } catch (error) {}
 }
 
+function storeVersionNumber() {
+  fs.writeFileSync(path.join(__dirname, 'lib', 'version'), latestVersion);
+}
+
 function setVariables() {
-  // TODO pass latestVersion value to lib
+  storeVersionNumber();
+
   var fileUri =
     baseCDNURL + '/' + latestVersion + '/geckodriver-' + latestVersion;
   var DOWNLOAD_MAC = fileUri + '-macos.tar.gz';
