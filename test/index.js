@@ -1,7 +1,7 @@
 import test from 'ava';
 import child_process from 'child_process';
 
-test.cb('properly extracts', t => {
+test.cb.serial('properly extracts', t => {
   child_process.exec('node ../index.js', (error, stdout, stderr) => {
     if (error) {
       return t.fail(`exec error: ${error}`);
@@ -12,7 +12,7 @@ test.cb('properly extracts', t => {
   });
 });
 
-test('programmatic usage', t => {
+test.serial('programmatic usage', t => {
   var driver = require('../lib/geckodriver');
   t.is(!!driver.version, true);
 });
