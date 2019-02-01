@@ -21,67 +21,78 @@ var baseCDNURL =
 // Remove trailing slash if included
 baseCDNURL = baseCDNURL.replace(/\/+$/, '');
 
-// fetching latest version number, falling back to specified version
 var latestVersion = 'v0.23.0';
-(async () => {
+var downloadUrl;
+var outFile;
+var executable;
+var downloadOptions;
+var proxy;
+
+async function fetchLatestVersionNumber() {
   try {
     var response = await got(
       'https://github.com/mozilla/geckodriver/releases/latest'
     );
-    console.log('hey');
     latestVersion = response.socket._httpMessage.path
       .match(/\/v(.*)$/)[0]
       .substring(1);
-  } catch (error) {
-    console.log(error.response.body);
+  } catch (error) {}
+}
+
+function setVariables() {
+  // TODO pass latestVersion value to lib
+  var fileUri =
+    baseCDNURL + '/' + latestVersion + '/geckodriver-' + latestVersion;
+  var DOWNLOAD_MAC = fileUri + '-macos.tar.gz';
+  var DOWNLOAD_LINUX64 = fileUri + '-linux64.tar.gz';
+  var DOWNLOAD_LINUX32 = fileUri + '-linux32.tar.gz';
+  var DOWNLOAD_WIN32 = fileUri + '-win32.zip';
+  var DOWNLOAD_WIN64 = fileUri + '-win64.zip';
+
+  // TODO: move this to package.json or something
+  downloadUrl = DOWNLOAD_MAC;
+  outFile = 'geckodriver.tar.gz';
+  executable = 'geckodriver';
+
+  downloadOptions = {};
+  proxy = process.env.HTTPS_PROXY || process.env.HTTP_PROXY || null;
+  if (proxy !== null) {
+    downloadOptions.agent = new proxyAgent(proxy);
   }
-})();
 
-var fileUri =
-  baseCDNURL + '/' + latestVersion + '/geckodriver-' + latestVersion;
-var DOWNLOAD_MAC = fileUri + '-macos.tar.gz';
-var DOWNLOAD_LINUX64 = fileUri + '-linux64.tar.gz';
-var DOWNLOAD_LINUX32 = fileUri + '-linux32.tar.gz';
-var DOWNLOAD_WIN32 = fileUri + '-win32.zip';
-var DOWNLOAD_WIN64 = fileUri + '-win64.zip';
-console.log(DOWNLOAD_MAC);
+  if (platform === 'linux') {
+    downloadUrl = arch === 'x64' ? DOWNLOAD_LINUX64 : DOWNLOAD_LINUX32;
+  }
 
-// TODO: move this to package.json or something
-var downloadUrl = DOWNLOAD_MAC;
-var outFile = 'geckodriver.tar.gz';
-var executable = 'geckodriver';
-
-var downloadOptions = {};
-var proxy = process.env.HTTPS_PROXY || process.env.HTTP_PROXY || null;
-if (proxy !== null) {
-  downloadOptions.agent = new proxyAgent(proxy);
+  if (platform === 'win32') {
+    // No 32-bits of geckodriver for now
+    downloadUrl = arch === 'x64' ? DOWNLOAD_WIN64 : DOWNLOAD_WIN32;
+    outFile = 'geckodriver.zip';
+    executable = 'geckodriver.exe';
+  }
 }
 
-if (platform === 'linux') {
-  downloadUrl = arch === 'x64' ? DOWNLOAD_LINUX64 : DOWNLOAD_LINUX32;
+function download() {
+  process.stdout.write('Downloading geckodriver... ');
+  got
+    .stream(url.parse(downloadUrl), downloadOptions)
+    .pipe(fs.createWriteStream(outFile))
+    .on('close', function() {
+      process.stdout.write('Extracting... ');
+      extract(path.join(__dirname, outFile), __dirname)
+        .then(function() {
+          console.log('Complete.');
+        })
+        .catch(function(err) {
+          console.log('Something is wrong ', err.stack);
+        });
+    });
 }
 
-if (platform === 'win32') {
-  // No 32-bits of geckodriver for now
-  downloadUrl = arch === 'x64' ? DOWNLOAD_WIN64 : DOWNLOAD_WIN32;
-  outFile = 'geckodriver.zip';
-  executable = 'geckodriver.exe';
-}
-
-process.stdout.write('Downloading geckodriver... ');
-got
-  .stream(url.parse(downloadUrl), downloadOptions)
-  .pipe(fs.createWriteStream(outFile))
-  .on('close', function() {
-    process.stdout.write('Extracting... ');
-    extract(path.join(__dirname, outFile), __dirname)
-      .then(function() {
-        console.log('Complete.');
-      })
-      .catch(function(err) {
-        console.log('Something is wrong ', err.stack);
-      });
-  });
+fetchLatestVersionNumber()
+  .then(setVariables)
+  .then(download)
+  .catch(console.error);
 
 function extract(archivePath, targetDirectoryPath) {
   return new Promise(function(resolve, reject) {
