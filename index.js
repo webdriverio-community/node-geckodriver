@@ -13,23 +13,45 @@ var Promise = require('bluebird');
 var platform = os.platform();
 var arch = os.arch();
 
-var baseCDNURL = process.env.GECKODRIVER_CDNURL || process.env.npm_config_geckodriver_cdnurl || 'https://github.com/mozilla/geckodriver/releases/download';
+var baseCDNURL =
+  process.env.GECKODRIVER_CDNURL ||
+  process.env.npm_config_geckodriver_cdnurl ||
+  'https://github.com/mozilla/geckodriver/releases/download';
 
 // Remove trailing slash if included
 baseCDNURL = baseCDNURL.replace(/\/+$/, '');
 
-var DOWNLOAD_MAC = baseCDNURL + '/v0.23.0/geckodriver-v0.23.0-macos.tar.gz';
-var DOWNLOAD_LINUX64 = baseCDNURL + '/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz';
-var DOWNLOAD_LINUX32 = baseCDNURL + '/v0.23.0/geckodriver-v0.23.0-linux32.tar.gz';
-var DOWNLOAD_WIN32 = baseCDNURL + '/v0.23.0/geckodriver-v0.23.0-win32.zip';
-var DOWNLOAD_WIN64 = baseCDNURL + '/v0.23.0/geckodriver-v0.23.0-win64.zip';
+// fetching latest version number, falling back to specified version
+var latestVersion = 'v0.23.0';
+(async () => {
+  try {
+    var response = await got(
+      'https://github.com/mozilla/geckodriver/releases/latest'
+    );
+    console.log('hey');
+    latestVersion = response.socket._httpMessage.path
+      .match(/\/v(.*)$/)[0]
+      .substring(1);
+  } catch (error) {
+    console.log(error.response.body);
+  }
+})();
+
+var fileUri =
+  baseCDNURL + '/' + latestVersion + '/geckodriver-' + latestVersion;
+var DOWNLOAD_MAC = fileUri + '-macos.tar.gz';
+var DOWNLOAD_LINUX64 = fileUri + '-linux64.tar.gz';
+var DOWNLOAD_LINUX32 = fileUri + '-linux32.tar.gz';
+var DOWNLOAD_WIN32 = fileUri + '-win32.zip';
+var DOWNLOAD_WIN64 = fileUri + '-win64.zip';
+console.log(DOWNLOAD_MAC);
 
 // TODO: move this to package.json or something
 var downloadUrl = DOWNLOAD_MAC;
 var outFile = 'geckodriver.tar.gz';
 var executable = 'geckodriver';
 
-var downloadOptions = {}
+var downloadOptions = {};
 var proxy = process.env.HTTPS_PROXY || process.env.HTTP_PROXY || null;
 if (proxy !== null) {
   downloadOptions.agent = new proxyAgent(proxy);
@@ -47,40 +69,47 @@ if (platform === 'win32') {
 }
 
 process.stdout.write('Downloading geckodriver... ');
-got.stream(url.parse(downloadUrl), downloadOptions)
+got
+  .stream(url.parse(downloadUrl), downloadOptions)
   .pipe(fs.createWriteStream(outFile))
-  .on('close', function () {
+  .on('close', function() {
     process.stdout.write('Extracting... ');
     extract(path.join(__dirname, outFile), __dirname)
-      .then(function () {
+      .then(function() {
         console.log('Complete.');
       })
-      .catch(function (err) {
+      .catch(function(err) {
         console.log('Something is wrong ', err.stack);
       });
   });
 
 function extract(archivePath, targetDirectoryPath) {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     if (outFile.indexOf('.tar.gz') >= 0) {
-      tar.extract({
-        file: archivePath,
-        cwd: targetDirectoryPath
-      }).then(function (err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
-        }
-      });
+      tar
+        .extract({
+          file: archivePath,
+          cwd: targetDirectoryPath,
+        })
+        .then(function(err) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
     } else if (outFile.indexOf('.zip') >= 0) {
-      new AdmZip(archivePath).extractAllToAsync(targetDirectoryPath, true, function (err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
+      new AdmZip(archivePath).extractAllToAsync(
+        targetDirectoryPath,
+        true,
+        function(err) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
         }
-      });
+      );
     } else {
       reject('This archive extension is not supported: ' + archivePath);
     }
