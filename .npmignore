@@ -2,3 +2,4 @@
 geckodriver
 geckodriver.tar.gz
 .idea
+!bin/geckodriver
