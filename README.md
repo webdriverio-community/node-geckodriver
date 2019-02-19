@@ -90,6 +90,7 @@ Use `HTTPS_PROXY` or `HTTP_PROXY` to set your proxy url.
 
 ## Changelog
 
+* 1.15.1 - fix for the new `.npmignore` pattern matching
 * 1.15.0 - geckodriver 0.24.0
 * 1.14.0 - geckodriver 0.23.0
 * 1.13.0 - geckodriver 0.22.0
