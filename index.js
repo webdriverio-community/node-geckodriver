@@ -15,14 +15,17 @@ var arch = os.arch();
 
 var baseCDNURL = process.env.GECKODRIVER_CDNURL || process.env.npm_config_geckodriver_cdnurl || 'https://github.com/mozilla/geckodriver/releases/download';
 
+var version = process.env.GECKODRIVER_VERSION || '0.24.0';
+
 // Remove trailing slash if included
 baseCDNURL = baseCDNURL.replace(/\/+$/, '');
 
-var DOWNLOAD_MAC = baseCDNURL + '/v0.24.0/geckodriver-v0.24.0-macos.tar.gz';
-var DOWNLOAD_LINUX64 = baseCDNURL + '/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz';
-var DOWNLOAD_LINUX32 = baseCDNURL + '/v0.24.0/geckodriver-v0.24.0-linux32.tar.gz';
-var DOWNLOAD_WIN32 = baseCDNURL + '/v0.24.0/geckodriver-v0.24.0-win32.zip';
-var DOWNLOAD_WIN64 = baseCDNURL + '/v0.24.0/geckodriver-v0.24.0-win64.zip';
+var baseDownloadUrl =  baseCDNURL + '/v' + version + '/geckodriver-v' + version;
+var DOWNLOAD_MAC = baseDownloadUrl +'-macos.tar.gz';
+var DOWNLOAD_LINUX64 = baseDownloadUrl +'-linux64.tar.gz';
+var DOWNLOAD_LINUX32 = baseDownloadUrl +'-linux32.tar.gz';
+var DOWNLOAD_WIN32 = baseDownloadUrl +'-win32.zip';
+var DOWNLOAD_WIN64 = baseDownloadUrl +'-win64.zip';
 
 // TODO: move this to package.json or something
 var downloadUrl = DOWNLOAD_MAC;

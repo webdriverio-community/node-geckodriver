@@ -65,6 +65,10 @@ Default location is set to https://github.com/mozilla/geckodriver/releases/downl
 
 Use `HTTPS_PROXY` or `HTTP_PROXY` to set your proxy url.
 
+## Setting a specific version
+
+Use `GECKODRIVER_VERSION` if you require a specific version of gecko driver for your browser version.
+
 ## Related Projects
 
 * [node-chromedriver](https://github.com/giggio/node-chromedriver)
