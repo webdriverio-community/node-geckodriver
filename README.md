@@ -76,6 +76,7 @@ Use `GECKODRIVER_VERSION` if you require a specific version of gecko driver for 
 ## Versions
 
 * [npm module version] - [geckodriver version]
+* 1.16.x - geckodriver 0.24.0 and `GECKODRIVER_VERSION` env support
 * 1.15.x - geckodriver 0.24.0
 * 1.14.x - geckodriver 0.23.0
 * 1.13.x - geckodriver 0.22.0
@@ -94,6 +95,7 @@ Use `GECKODRIVER_VERSION` if you require a specific version of gecko driver for 
 
 ## Changelog
 
+* 1.16.0 - added support for `GECKODRIVER_VERSION` env variable. Set it to `'0.24.0'` to fetch that version.
 * 1.15.1 - fix for the new `.npmignore` pattern matching
 * 1.15.0 - geckodriver 0.24.0
 * 1.14.0 - geckodriver 0.23.0
