@@ -14,7 +14,7 @@ var platform = os.platform();
 var arch = os.arch();
 
 var baseCDNURL = process.env.GECKODRIVER_CDNURL || process.env.npm_config_geckodriver_cdnurl || 'https://github.com/mozilla/geckodriver/releases/download';
-var DOWNLOAD_FILEPATH = process.env.GECKODRIVER_FILEPATH ? path.resolve(process.env.GECKODRIVER_FILEPATH) : undefined;
+var CACHED_ARCHIVE = process.env.GECKODRIVER_FILEPATH ? path.resolve(process.env.GECKODRIVER_FILEPATH) : undefined;
 
 var version = process.env.GECKODRIVER_VERSION || '0.24.0';
 
@@ -50,8 +50,8 @@ if (platform === 'win32') {
   executable = 'geckodriver.exe';
 }
 
-if (!DOWNLOAD_FILEPATH) {
-  extract(DOWNLOAD_FILEPATH);
+if (!CACHED_ARCHIVE) {
+  extract(CACHED_ARCHIVE);
 } else {
   process.stdout.write('Downloading geckodriver... ');
   got.stream(url.parse(downloadUrl), downloadOptions)
