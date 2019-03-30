@@ -50,7 +50,7 @@ if (platform === 'win32') {
   executable = 'geckodriver.exe';
 }
 
-if (!CACHED_ARCHIVE) {
+if (CACHED_ARCHIVE) {
   extract(CACHED_ARCHIVE);
 } else {
   process.stdout.write('Downloading geckodriver... ');
