@@ -14,6 +14,7 @@ var platform = os.platform();
 var arch = os.arch();
 
 var baseCDNURL = process.env.GECKODRIVER_CDNURL || process.env.npm_config_geckodriver_cdnurl || 'https://github.com/mozilla/geckodriver/releases/download';
+var CACHED_ARCHIVE = process.env.GECKODRIVER_FILEPATH ? path.resolve(process.env.GECKODRIVER_FILEPATH) : undefined;
 
 var version = process.env.GECKODRIVER_VERSION || '0.24.0';
 
@@ -49,21 +50,22 @@ if (platform === 'win32') {
   executable = 'geckodriver.exe';
 }
 
-process.stdout.write('Downloading geckodriver... ');
-got.stream(url.parse(downloadUrl), downloadOptions)
-  .pipe(fs.createWriteStream(outFile))
-  .on('close', function () {
-    process.stdout.write('Extracting... ');
-    extract(path.join(__dirname, outFile), __dirname)
-      .then(function () {
-        console.log('Complete.');
-      })
-      .catch(function (err) {
-        console.log('Something is wrong ', err.stack);
-      });
-  });
+if (CACHED_ARCHIVE) {
+  extract(CACHED_ARCHIVE);
+} else {
+  process.stdout.write('Downloading geckodriver... ');
+  got.stream(url.parse(downloadUrl), downloadOptions)
+    .pipe(fs.createWriteStream(outFile))
+    .on('close', function () {
+      extract(path.join(__dirname, outFile));
+    });
+}
 
-function extract(archivePath, targetDirectoryPath) {
+
+function extract(archivePath) {
+  process.stdout.write('Extracting... ');
+  var targetDirectoryPath = __dirname;
+
   return new Promise(function (resolve, reject) {
     if (outFile.indexOf('.tar.gz') >= 0) {
       tar.extract({
@@ -87,5 +89,11 @@ function extract(archivePath, targetDirectoryPath) {
     } else {
       reject('This archive extension is not supported: ' + archivePath);
     }
+  })
+  .then(function () {
+    console.log('Complete.');
+  })
+  .catch(function (err) {
+    console.log('Something is wrong ', err.stack);
   });
 }
