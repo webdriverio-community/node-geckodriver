@@ -69,6 +69,10 @@ Use `HTTPS_PROXY` or `HTTP_PROXY` to set your proxy url.
 
 Use `GECKODRIVER_VERSION` if you require a specific version of gecko driver for your browser version.
 
+## Using a cached download
+
+Use `GECKODRIVER_FILEPATH` to point to a pre-downloaded geckodriver archive that should be extracted during installation.
+
 ## Related Projects
 
 * [node-chromedriver](https://github.com/giggio/node-chromedriver)
