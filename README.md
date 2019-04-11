@@ -99,6 +99,7 @@ Use `GECKODRIVER_FILEPATH` to point to a pre-downloaded geckodriver archive that
 
 ## Changelog
 
+* 1.16.2 - fix issue with 'tar' dependency.
 * 1.16.1 - added support for `GECKODRIVER_FILEPATH` env variable. 
 * 1.16.0 - added support for `GECKODRIVER_VERSION` env variable. Set it to `'0.24.0'` to fetch that version.
 * 1.15.1 - fix for the new `.npmignore` pattern matching
