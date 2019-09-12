@@ -73,6 +73,11 @@ Use `GECKODRIVER_VERSION` if you require a specific version of gecko driver for 
 
 Use `GECKODRIVER_FILEPATH` to point to a pre-downloaded geckodriver archive that should be extracted during installation.
 
+## Skipping geckodriver download
+
+Use `GECKODRIVER_SKIP_DOWNLOAD` to skip the download of the geckodriver file.
+
+
 ## Related Projects
 
 * [node-chromedriver](https://github.com/giggio/node-chromedriver)
