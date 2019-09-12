@@ -13,6 +13,12 @@ var Promise = require('bluebird');
 var platform = os.platform();
 var arch = os.arch();
 
+var skipDownload = process.env.GECKODRIVER_SKIP_DOWNLOAD || process.env.npm_config_geckodriver_skip_download;
+if (skipDownload === 'true') {
+  console.log('Found GECKODRIVER_SKIP_DOWNLOAD variable, skipping installation.');
+  process.exit(0);
+}
+
 var baseCDNURL = process.env.GECKODRIVER_CDNURL || process.env.npm_config_geckodriver_cdnurl || 'https://github.com/mozilla/geckodriver/releases/download';
 var CACHED_ARCHIVE = process.env.GECKODRIVER_FILEPATH ? path.resolve(process.env.GECKODRIVER_FILEPATH) : undefined;
 
