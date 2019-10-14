@@ -22,7 +22,7 @@ if (skipDownload === 'true') {
 var baseCDNURL = process.env.GECKODRIVER_CDNURL || process.env.npm_config_geckodriver_cdnurl || 'https://github.com/mozilla/geckodriver/releases/download';
 var CACHED_ARCHIVE = process.env.GECKODRIVER_FILEPATH ? path.resolve(process.env.GECKODRIVER_FILEPATH) : undefined;
 
-var version = process.env.GECKODRIVER_VERSION || '0.25.0';
+var version = process.env.GECKODRIVER_VERSION || '0.26.0';
 
 // Remove trailing slash if included
 baseCDNURL = baseCDNURL.replace(/\/+$/, '');
