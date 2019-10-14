@@ -85,6 +85,8 @@ Use `GECKODRIVER_SKIP_DOWNLOAD` to skip the download of the geckodriver file.
 ## Versions
 
 * [npm module version] - [geckodriver version]
+* 1.18.x - geckodriver 0.26.0
+* 1.17.x - geckodriver 0.25.0
 * 1.16.x - geckodriver 0.24.0 and `GECKODRIVER_VERSION` env support
 * 1.15.x - geckodriver 0.24.0
 * 1.14.x - geckodriver 0.23.0
@@ -104,6 +106,8 @@ Use `GECKODRIVER_SKIP_DOWNLOAD` to skip the download of the geckodriver file.
 
 ## Changelog
 
+* 1.18.0 - geckodriver 26.
+* 1.17.0 - geckodriver 25.
 * 1.16.2 - fix issue with 'tar' dependency.
 * 1.16.1 - added support for `GECKODRIVER_FILEPATH` env variable. 
 * 1.16.0 - added support for `GECKODRIVER_VERSION` env variable. Set it to `'0.24.0'` to fetch that version.
