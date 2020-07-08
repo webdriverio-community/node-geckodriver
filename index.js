@@ -40,7 +40,7 @@ var outFile = 'geckodriver.tar.gz';
 var executable = 'geckodriver';
 
 var downloadOptions = {}
-var proxy = process.env.HTTPS_PROXY || process.env.HTTP_PROXY || null;
+var proxy = process.env.HTTPS_PROXY || process.env.HTTP_PROXY || process.env.https_proxy || process.env.http_proxy || null;
 if (proxy !== null) {
   downloadOptions.agent = new proxyAgent(proxy);
 }
