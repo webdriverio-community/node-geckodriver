@@ -1,8 +1,8 @@
-import test from 'ava';
-import child_process from 'child_process';
+const test = require('ava');
+const child_process = require('child_process');
 
 test.cb('properly extracts', t => {
-  child_process.exec('node ../index.js', (error, stdout, stderr) => {
+  child_process.exec('node index.js', (error, stdout, stderr) => {
     if (error) {
       return t.fail(`exec error: ${error}`)
     }
