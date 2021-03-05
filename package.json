@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/vladikoff/node-geckodriver#readme",
   "dependencies": {
-    "adm-zip": "0.4.16",
+    "adm-zip": "0.5.3",
     "bluebird": "3.7.2",
     "got": "5.6.0",
     "tar": "6.0.2",
