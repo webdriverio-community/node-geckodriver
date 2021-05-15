@@ -15,6 +15,9 @@
     "email": "vlad.filippov@gmail.com",
     "url": "http://vf.io"
   },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "main": "lib/geckodriver",
   "bin": {
     "geckodriver": "./bin/geckodriver"
