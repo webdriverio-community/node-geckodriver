@@ -1,4 +1,4 @@
-## node-geckodriver [![Build Status: Linux](https://travis-ci.org/vladikoff/node-geckodriver.svg?branch=master)](https://travis-ci.org/vladikoff/node-geckodriver) [![Build status: Windows](https://ci.appveyor.com/api/projects/status/s1e19ujtssxcn268/branch/master?svg=true)](https://ci.appveyor.com/project/vladikoff/node-geckodriver/branch/master) [![npm package](https://img.shields.io/npm/v/geckodriver.svg)](https://www.npmjs.com/package/geckodriver)
+## node-geckodriver [![Build Status](https://github.com/vladikoff/node-geckodriver/workflows/Tests/badge.svg)](https://github.com/vladikoff/node-geckodriver/actions?workflow=Tests) [![npm package](https://img.shields.io/npm/v/geckodriver.svg)](https://www.npmjs.com/package/geckodriver)
 
 > Downloader for [github.com/mozilla/geckodriver/releases](https://github.com/mozilla/geckodriver/releases)
 
