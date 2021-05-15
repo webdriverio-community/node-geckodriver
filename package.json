@@ -1,6 +1,6 @@
 {
   "name": "geckodriver",
-  "version": "1.22.2",
+  "version": "1.22.3",
   "description": "Downloader for https://github.com/mozilla/geckodriver/releases",
   "scripts": {
     "test": "ava",
@@ -14,6 +14,9 @@
     "name": "vladikoff",
     "email": "vlad.filippov@gmail.com",
     "url": "http://vf.io"
+  },
+  "engines": {
+    "node": ">=12.0.0"
   },
   "main": "lib/geckodriver",
   "bin": {
