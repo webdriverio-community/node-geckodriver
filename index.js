@@ -1,7 +1,6 @@
 var os = require('os');
 var fs = require('fs');
 var path = require('path');
-var url = require('url');
 
 var got = require('got');
 var tar = require('tar');
@@ -60,7 +59,7 @@ if (CACHED_ARCHIVE) {
   extract(CACHED_ARCHIVE);
 } else {
   process.stdout.write('Downloading geckodriver... ');
-  got.stream(url.parse(downloadUrl), downloadOptions)
+  got.stream(new URL(downloadUrl), downloadOptions)
     .pipe(fs.createWriteStream(outFile))
     .on('close', function () {
       extract(path.join(__dirname, outFile));
