@@ -5,7 +5,7 @@ var path = require('path');
 var got = require('got');
 var tar = require('tar');
 var AdmZip = require('adm-zip');
-var proxyAgent = require('https-proxy-agent');
+var tunnel = require('tunnel');
 
 var Promise = require('bluebird');
 
@@ -41,7 +41,13 @@ var executable = 'geckodriver';
 var downloadOptions = {}
 var proxy = process.env.HTTPS_PROXY || process.env.HTTP_PROXY || process.env.https_proxy || process.env.http_proxy || null;
 if (proxy !== null) {
-  downloadOptions.agent = new proxyAgent(proxy);
+  downloadOptions.agent = {
+		https: tunnel.httpsOverHttp({
+			proxy: {
+				host: 'localhost'
+			}
+		})
+  };
 }
 
 if (platform === 'linux') {
