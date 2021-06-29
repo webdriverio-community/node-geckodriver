@@ -111,6 +111,7 @@ Use `GECKODRIVER_SKIP_DOWNLOAD` to skip the download of the geckodriver file.
 
 ## Changelog
 
+* 2.0.1 - fixed proxy download behaviour.
 * 1.20.0 - geckodriver 27. Requires node 8 and higher. Support `HTTPS_PROXY` env and npm_config_geckodriver_version variables.
 * 1.19.0 - geckodriver 26. Dependency updates.
 * 1.18.0 - geckodriver 26.
