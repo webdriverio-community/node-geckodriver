@@ -85,6 +85,7 @@ Use `GECKODRIVER_SKIP_DOWNLOAD` to skip the download of the geckodriver file.
 ## Versions
 
 * [npm module version] - [geckodriver version]
+* 3.x.x - geckodriver 0.30.0, refactored logic, dependency updates.
 * 2.00.x - geckodriver 0.29.1, support changed to node v12+
 * 1.22.x - geckodriver 0.29.0
 * 1.21.x - geckodriver 0.28.0

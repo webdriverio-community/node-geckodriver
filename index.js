@@ -96,7 +96,7 @@ function extract(archivePath) {
     }
   })
   .then(function () {
-    console.log('Complete.');
+    process.stdout.write('Complete.');
   })
   .catch(function (err) {
     console.log('Something is wrong ', err.stack);
