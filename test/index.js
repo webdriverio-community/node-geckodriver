@@ -6,7 +6,7 @@ test.cb('properly extracts', t => {
     if (error) {
       return t.fail(`exec error: ${error}`)
     }
-    t.is(stdout, 'Downloading geckodriver... Extracting... Complete.\n');
+    t.assert(stdout.includes('Downloading geckodriver'), stdout);
     t.is(stderr, '');
     t.end();
   });
@@ -14,5 +14,5 @@ test.cb('properly extracts', t => {
 
 test('programmatic usage', t => {
   var driver = require('../lib/geckodriver')
-  t.is(driver.version, '0.29.1')
+  t.is(driver.version, '0.30.0')
 });
