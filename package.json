@@ -30,7 +30,7 @@
   "dependencies": {
     "adm-zip": "0.5.9",
     "bluebird": "3.7.2",
-    "got": "11.8.2",
+    "got": "11.8.5",
     "tar": "6.1.11",
     "https-proxy-agent": "5.0.0"
   },
