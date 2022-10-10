@@ -85,7 +85,8 @@ Use `GECKODRIVER_SKIP_DOWNLOAD` to skip the download of the geckodriver file.
 ## Versions
 
 * [npm module version] - [geckodriver version]
-* 3.x.x - geckodriver 0.30.0, refactored logic, dependency updates.
+* 3.0.3 - geckodriver 0.31.0
+* 3.0.x - geckodriver 0.30.0, refactored logic, dependency updates.
 * 2.00.x - geckodriver 0.29.1, support changed to node v12+
 * 1.22.x - geckodriver 0.29.0
 * 1.21.x - geckodriver 0.28.0
@@ -112,6 +113,7 @@ Use `GECKODRIVER_SKIP_DOWNLOAD` to skip the download of the geckodriver file.
 
 ## Changelog
 
+* 3.0.3 - geckodriver 0.31.0
 * 2.0.1 - fixed proxy download behaviour.
 * 1.20.0 - geckodriver 27. Requires node 8 and higher. Support `HTTPS_PROXY` env and npm_config_geckodriver_version variables.
 * 1.19.0 - geckodriver 26. Dependency updates.
