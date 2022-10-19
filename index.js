@@ -28,13 +28,22 @@ baseCDNURL = baseCDNURL.replace(/\/+$/, '');
 
 var baseDownloadUrl =  baseCDNURL + '/v' + version + '/geckodriver-v' + version;
 var DOWNLOAD_MAC = baseDownloadUrl +'-macos.tar.gz';
+var DOWNLOAD_MAC_ARM64 = baseDownloadUrl +'-macos-aarch64.tar.gz';
+
+var DOWNLOAD_LINUX_ARM64 = baseDownloadUrl +'-linux-aarch64.tar.gz';
 var DOWNLOAD_LINUX64 = baseDownloadUrl +'-linux64.tar.gz';
 var DOWNLOAD_LINUX32 = baseDownloadUrl +'-linux32.tar.gz';
+
+var DOWNLOAD_WIN_ARM64 = baseDownloadUrl +'-win-aarch64.zip';
 var DOWNLOAD_WIN32 = baseDownloadUrl +'-win32.zip';
 var DOWNLOAD_WIN64 = baseDownloadUrl +'-win64.zip';
 
 // TODO: move this to package.json or something
 var downloadUrl = DOWNLOAD_MAC;
+if (arch === 'arm64') {
+  downloadUrl = DOWNLOAD_MAC_ARM64;
+}
+
 var outFile = 'geckodriver.tar.gz';
 var executable = 'geckodriver';
 
@@ -45,12 +54,29 @@ if (proxy !== null) {
 }
 
 if (platform === 'linux') {
-  downloadUrl = arch === 'x64' ? DOWNLOAD_LINUX64 : DOWNLOAD_LINUX32;
+  switch (arch) {
+    case 'arm64':
+      downloadUrl = DOWNLOAD_LINUX_ARM64;
+      break;
+    case 'x64':
+      downloadUrl = DOWNLOAD_LINUX64;
+      break;
+    default:
+      downloadUrl = DOWNLOAD_LINUX32;
+  }
 }
 
 if (platform === 'win32') {
-  // No 32-bits of geckodriver for now
-  downloadUrl = arch === 'x64' ? DOWNLOAD_WIN64 : DOWNLOAD_WIN32;
+  switch (arch) {
+    case 'arm64':
+      downloadUrl = DOWNLOAD_WIN_ARM64;
+      break;
+    case 'x64':
+      downloadUrl = DOWNLOAD_WIN64;
+      break;
+    default:
+      downloadUrl = DOWNLOAD_WIN32;
+  }
   outFile = 'geckodriver.zip';
   executable = 'geckodriver.exe';
 }
