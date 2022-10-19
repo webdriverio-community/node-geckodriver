@@ -14,7 +14,6 @@ test.cb('properly extracts custom arch', t => {
     t.is(stderr, '');
     process.env.GECKODRIVER_ARCH = oldArch; 
     var out = child_process.execSync('file -b geckodriver');
-    console.log(out.toString());
     t.truthy(out.toString().includes('arm64') || out.toString().includes('aarch64'));
     process.env.GECKODRIVER_ARCH = 'x64';
     
@@ -26,8 +25,7 @@ test.cb('properly extracts custom arch', t => {
       t.assert(stdout.includes('Downloading geckodriver'), stdout);
       t.is(stderr, '');
       var out = child_process.execSync('file -b geckodriver');
-      console.log(out.toString());
-      t.truthy(out.toString().includes('x86_64'));
+      t.truthy(out.toString().includes('x86_64') || out.toString().includes('x86-64'));
       t.end();
     });
   });
