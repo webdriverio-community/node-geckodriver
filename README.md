@@ -85,6 +85,7 @@ Use `GECKODRIVER_SKIP_DOWNLOAD` to skip the download of the geckodriver file.
 ## Versions
 
 * [npm module version] - [geckodriver version]
+* 4.0.0 - geckodriver 0.32.0.
 * 3.2.0 - geckodriver 0.32.0, arm64 support.
 * 3.1.0 - geckodriver 0.31.0
 * 3.0.x - geckodriver 0.30.0, refactored logic, dependency updates.
@@ -114,6 +115,7 @@ Use `GECKODRIVER_SKIP_DOWNLOAD` to skip the download of the geckodriver file.
 
 ## Changelog
 
+* 4.0.0 - requires node 14+, drops support for node 12.
 * 3.2.0 - geckodriver 0.32.0, arm64 support for Mac, Linux and Windows, added `GECKODRIVER_ARCH` for custom arch downloads.
 * 3.1.0 - geckodriver 0.31.0
 * 2.0.1 - fixed proxy download behaviour.
