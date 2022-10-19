@@ -10,7 +10,7 @@ var proxyAgent = require('https-proxy-agent');
 var Promise = require('bluebird');
 
 var platform = os.platform();
-var arch = os.arch();
+var arch = process.env.GECKODRIVER_ARCH || process.env.npm_config_geckodriver_arch || os.arch();
 
 var skipDownload = process.env.GECKODRIVER_SKIP_DOWNLOAD || process.env.npm_config_geckodriver_skip_download;
 if (skipDownload === 'true') {
@@ -21,7 +21,7 @@ if (skipDownload === 'true') {
 var baseCDNURL = process.env.GECKODRIVER_CDNURL || process.env.npm_config_geckodriver_cdnurl || 'https://github.com/mozilla/geckodriver/releases/download';
 var CACHED_ARCHIVE = process.env.GECKODRIVER_FILEPATH ? path.resolve(process.env.GECKODRIVER_FILEPATH) : undefined;
 
-var version = process.env.GECKODRIVER_VERSION || process.env.npm_config_geckodriver_version || '0.30.0';
+var version = process.env.GECKODRIVER_VERSION || process.env.npm_config_geckodriver_version || '0.32.0';
 
 // Remove trailing slash if included
 baseCDNURL = baseCDNURL.replace(/\/+$/, '');
