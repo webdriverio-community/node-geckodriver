@@ -25,7 +25,6 @@ test.cb('properly extracts custom arch', t => {
       t.assert(stdout.includes('Downloading geckodriver'), stdout);
       t.is(stderr, '');
       var out = child_process.execSync('file -b geckodriver').toString();
-      console.log('out', out);
       t.truthy(/x86_64|x86-64/.test(out));
       t.end();
     });
