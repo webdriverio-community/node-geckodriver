@@ -10,7 +10,7 @@ var proxyAgent = require('https-proxy-agent');
 var Promise = require('bluebird');
 
 var platform = os.platform();
-var arch = os.arch();
+var arch = process.env.GECKODRIVER_ARCH || process.env.npm_config_geckodriver_arch || os.arch();
 
 var skipDownload = process.env.GECKODRIVER_SKIP_DOWNLOAD || process.env.npm_config_geckodriver_skip_download;
 if (skipDownload === 'true') {
@@ -21,20 +21,29 @@ if (skipDownload === 'true') {
 var baseCDNURL = process.env.GECKODRIVER_CDNURL || process.env.npm_config_geckodriver_cdnurl || 'https://github.com/mozilla/geckodriver/releases/download';
 var CACHED_ARCHIVE = process.env.GECKODRIVER_FILEPATH ? path.resolve(process.env.GECKODRIVER_FILEPATH) : undefined;
 
-var version = process.env.GECKODRIVER_VERSION || process.env.npm_config_geckodriver_version || '0.30.0';
+var version = process.env.GECKODRIVER_VERSION || process.env.npm_config_geckodriver_version || '0.32.0';
 
 // Remove trailing slash if included
 baseCDNURL = baseCDNURL.replace(/\/+$/, '');
 
 var baseDownloadUrl =  baseCDNURL + '/v' + version + '/geckodriver-v' + version;
 var DOWNLOAD_MAC = baseDownloadUrl +'-macos.tar.gz';
+var DOWNLOAD_MAC_ARM64 = baseDownloadUrl +'-macos-aarch64.tar.gz';
+
+var DOWNLOAD_LINUX_ARM64 = baseDownloadUrl +'-linux-aarch64.tar.gz';
 var DOWNLOAD_LINUX64 = baseDownloadUrl +'-linux64.tar.gz';
 var DOWNLOAD_LINUX32 = baseDownloadUrl +'-linux32.tar.gz';
+
+var DOWNLOAD_WIN_ARM64 = baseDownloadUrl +'-win-aarch64.zip';
 var DOWNLOAD_WIN32 = baseDownloadUrl +'-win32.zip';
 var DOWNLOAD_WIN64 = baseDownloadUrl +'-win64.zip';
 
 // TODO: move this to package.json or something
 var downloadUrl = DOWNLOAD_MAC;
+if (arch === 'arm64') {
+  downloadUrl = DOWNLOAD_MAC_ARM64;
+}
+
 var outFile = 'geckodriver.tar.gz';
 var executable = 'geckodriver';
 
@@ -45,12 +54,29 @@ if (proxy !== null) {
 }
 
 if (platform === 'linux') {
-  downloadUrl = arch === 'x64' ? DOWNLOAD_LINUX64 : DOWNLOAD_LINUX32;
+  switch (arch) {
+    case 'arm64':
+      downloadUrl = DOWNLOAD_LINUX_ARM64;
+      break;
+    case 'x64':
+      downloadUrl = DOWNLOAD_LINUX64;
+      break;
+    default:
+      downloadUrl = DOWNLOAD_LINUX32;
+  }
 }
 
 if (platform === 'win32') {
-  // No 32-bits of geckodriver for now
-  downloadUrl = arch === 'x64' ? DOWNLOAD_WIN64 : DOWNLOAD_WIN32;
+  switch (arch) {
+    case 'arm64':
+      downloadUrl = DOWNLOAD_WIN_ARM64;
+      break;
+    case 'x64':
+      downloadUrl = DOWNLOAD_WIN64;
+      break;
+    default:
+      downloadUrl = DOWNLOAD_WIN32;
+  }
   outFile = 'geckodriver.zip';
   executable = 'geckodriver.exe';
 }
