@@ -33,5 +33,5 @@ test.cb('properly extracts custom arch', t => {
 
 test('programmatic usage', t => {
   var driver = require('../lib/geckodriver')
-  t.is(driver.version, '0.32.0')
+  t.is(driver.version, '0.32.1')
 });

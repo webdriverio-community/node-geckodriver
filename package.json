@@ -28,10 +28,10 @@
   },
   "homepage": "https://github.com/vladikoff/node-geckodriver#readme",
   "dependencies": {
-    "adm-zip": "0.5.9",
+    "adm-zip": "0.5.10",
     "bluebird": "3.7.2",
     "got": "11.8.5",
-    "tar": "6.1.11",
+    "tar": "6.1.13",
     "https-proxy-agent": "5.0.1"
   },
   "devDependencies": {

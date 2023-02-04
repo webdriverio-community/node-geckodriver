@@ -85,6 +85,7 @@ Use `GECKODRIVER_SKIP_DOWNLOAD` to skip the download of the geckodriver file.
 ## Versions
 
 * [npm module version] - [geckodriver version]
+* 4.1.0 - geckodriver 0.32.1.
 * 4.0.0 - geckodriver 0.32.0.
 * 3.2.0 - geckodriver 0.32.0, arm64 support.
 * 3.1.0 - geckodriver 0.31.0
