@@ -1,19 +1,7 @@
 # Changelog
 
-> **Tags:**
-> - :boom:       [Breaking Change]
-> - :eyeglasses: [Spec Compliancy]
-> - :rocket:     [New Feature]
-> - :bug:        [Bug Fix]
-> - :memo:       [Documentation]
-> - :house:      [Internal]
-> - :nail_care:  [Polish]
+For updates and changelogs on v4.0.0 and above, go to https://github.com/webdriverio-community/node-geckodriver/releases.
 
-_Note: Gaps between patch versions are faulty, broken or test releases._
-
-# Previous Versions
-
-* 4.0.0 - requires node 14+, drops support for node 12.
 * 3.2.0 - geckodriver 0.32.0, arm64 support for Mac, Linux and Windows, added `GECKODRIVER_ARCH` for custom arch downloads.
 * 3.1.0 - geckodriver 0.31.0
 * 2.0.1 - fixed proxy download behaviour.
