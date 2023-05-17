@@ -5,7 +5,7 @@ import fs from 'node:fs/promises'
 import decamelize from 'decamelize'
 
 import { GECKODRIVER_DOWNLOAD_PATH } from './constants.js'
-import type { GeckodriverParameters } from 'types.js'
+import type { GeckodriverParameters } from './types.js'
 
 export async function hasAccess(filePath: string) {
   return fs.access(filePath).then(() => true, () => false)

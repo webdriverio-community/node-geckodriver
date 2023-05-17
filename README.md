@@ -63,6 +63,10 @@ Alternatively, you can add the same property to your .npmrc file.
 
 Default location is set to https://github.com/mozilla/geckodriver/releases/download
 
+## Setting a PROXY URL
+
+Use `HTTPS_PROXY` or `HTTP_PROXY` to set your proxy url.
+
 # Programmatic Interface
 
 You can import this package with Node.js and start the driver as part of your script and use it e.g. with [WebdriverIO](https://webdriver.io).
@@ -204,7 +208,16 @@ Type: `string`
 ### customGeckoDriverPath
 Don't download Geckodriver, instead use a custom path to it, e.g. a cached binary.
 
-Type: `string`
+Type: `string`<br />
+Default: `process.env.GECKODRIVER_FILEPATH`
+
+# Other Browser Driver
+
+If you also look for other browser driver NPM wrapper, you can find them here:
+
+- Chrome: [giggio/node-chromedriver](https://github.com/giggio/node-chromedriver)
+- Microsoft Edge: [webdriverio-community/node-edgedriver](https://github.com/webdriverio-community/node-edgedriver)
+- Safari: [webdriverio-community/node-safaridriver](https://github.com/webdriverio-community/node-safaridriver)
 
 ---
 

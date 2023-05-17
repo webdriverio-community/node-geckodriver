@@ -8,7 +8,9 @@ import zlib from 'node:zlib'
 import { Readable } from 'node:stream'
 
 import tar from 'tar-fs'
-import fetch from 'node-fetch'
+import fetch, { type RequestInit } from 'node-fetch'
+import { HttpsProxyAgent } from 'https-proxy-agent'
+import { HttpProxyAgent } from 'http-proxy-agent'
 import unzipper, { type Entry } from 'unzipper'
 import logger from '@wdio/logger'
 
@@ -18,6 +20,13 @@ import { hasAccess, getDownloadUrl } from './utils.js'
 const streamPipeline = util.promisify(stream.pipeline)
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 const log = logger('geckodriver')
+
+const fetchOpts: RequestInit = {}
+if (process.env.HTTPS_PROXY) {
+  fetchOpts.agent = new HttpsProxyAgent(process.env.HTTPS_PROXY)
+} else if (process.env.HTTP_PROXY) {
+  fetchOpts.agent = new HttpProxyAgent(process.env.HTTP_PROXY)
+}
 
 export async function download (geckodriverVersion: string = process.env.GECKODRIVER_VERSION) {
   const targetDir = path.resolve(__dirname, '..', '.bin')
@@ -31,7 +40,7 @@ export async function download (geckodriverVersion: string = process.env.GECKODR
    * get latest version of Geckodriver
    */
   if (!geckodriverVersion) {
-    const res = await fetch(MOZ_CENTRAL_CARGO_TOML)
+    const res = await fetch(MOZ_CENTRAL_CARGO_TOML, fetchOpts)
     const toml = await res.text()
     const version = toml.split('\n').find((l) => l.startsWith('version = '))
     if (!version) {
@@ -43,7 +52,7 @@ export async function download (geckodriverVersion: string = process.env.GECKODR
 
   const url = getDownloadUrl(geckodriverVersion)
   log.info(`Downloading Geckodriver from ${url}`)
-  const res = await fetch(url)
+  const res = await fetch(url, fetchOpts)
 
   if (!res.body) {
     throw new Error(`Failed to download binary (statusCode ${res.status})`)

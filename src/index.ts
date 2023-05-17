@@ -10,11 +10,12 @@ import type { GeckodriverParameters } from 'types.js'
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
 export async function start (params: GeckodriverParameters) {
-  if (!params.customGeckoDriverPath) {
+  const customGeckoDriverPath = process.env.GECKODRIVER_FILEPATH || params.customGeckoDriverPath
+  if (!customGeckoDriverPath) {
     await downloadDriver(params.geckoDriverVersion)
   }
   const targetDir = path.resolve(__dirname, '..', '.bin')
-  const binaryFilePath = params.customGeckoDriverPath || path.resolve(targetDir, BINARY_FILE)
+  const binaryFilePath = customGeckoDriverPath || path.resolve(targetDir, BINARY_FILE)
 
   if (!(await hasAccess(binaryFilePath))) {
     throw new Error('Failed to access Geckodriver, was it installed successfully?')
