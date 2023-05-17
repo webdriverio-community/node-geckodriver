@@ -4,4 +4,4 @@ node_modules
 *.tar.gz
 *.log
 dist
-./.bin
+.bin/

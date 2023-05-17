@@ -19,9 +19,11 @@ export function getDownloadUrl (version: string) {
       : 'linux'
   const arch = os.arch() === 'arm64'
     ? '-aarch64'
-    : os.arch() === 'x64'
-      ? '64'
-      : '32'
+    : platformIdentifier === 'macos'
+      ? ''
+      : os.arch() === 'x64'
+        ? '64'
+        : '32'
   const ext = os.platform() === 'win32' ? '.zip' : '.tar.gz'
   return util.format(GECKODRIVER_DOWNLOAD_PATH, version, version, platformIdentifier, arch, ext)
 }

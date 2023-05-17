@@ -8,7 +8,7 @@ exports[`getDownloadUrl 3`] = `"https://github.com/mozilla/geckodriver/releases/
 
 exports[`getDownloadUrl 4`] = `"https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-win-aarch64.zip"`;
 
-exports[`getDownloadUrl 5`] = `"https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-macos64.tar.gz"`;
+exports[`getDownloadUrl 5`] = `"https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-macos.tar.gz"`;
 
 exports[`getDownloadUrl 6`] = `"https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-macos-aarch64.tar.gz"`;
 

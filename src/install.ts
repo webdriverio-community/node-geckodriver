@@ -54,8 +54,8 @@ export async function download (geckodriverVersion: string = process.env.GECKODR
   log.info(`Downloading Geckodriver from ${url}`)
   const res = await fetch(url, fetchOpts)
 
-  if (!res.body) {
-    throw new Error(`Failed to download binary (statusCode ${res.status})`)
+  if (res.status !== 200) {
+    throw new Error(`Failed to download binary (statusCode ${res.status}): ${res.statusText}`)
   }
 
   await fsp.mkdir(targetDir, { recursive: true })
