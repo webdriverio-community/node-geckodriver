@@ -11,6 +11,18 @@ You can install this package via:
 npm install geckodriver
 ```
 
+Or install it globally:
+
+```sh
+npm install -g geckodriver
+```
+
+__Note:__ This installs a `geckodriver` shell script that runs the executable, but on Windows, [`selenium-webdriver`](https://www.npmjs.com/package/selenium-webdriver) looks for `geckodriver.exe`. To use a global installation of this package with [`selenium-webdriver`](https://www.npmjs.com/package/selenium-webdriver) on Windows, copy or link `geckodriver.exe` to a location on your `PATH` (such as the NPM bin directory) after installing this package:
+
+```sh
+mklink %USERPROFILE%\AppData\Roaming\npm\geckodriver.exe %USERPROFILE%\AppData\Roaming\npm\node_modules\geckodriver\geckodriver.exe
+```
+
 Once installed you can start Geckodriver via:
 
 ```sh
@@ -36,6 +48,20 @@ testing/geckodriver in https://hg.mozilla.org/mozilla-central.
 This program is subject to the terms of the Mozilla Public License 2.0.
 You can obtain a copy of the license at https://mozilla.org/MPL/2.0/.
 ```
+
+## Setting a CDN URL for binary download
+
+To set an alternate CDN location for geckodriver binaries, set the `GECKODRIVER_CDNURL` like this:
+
+```sh
+GECKODRIVER_CDNURL=https://INTERNAL_CDN/geckodriver/download
+```
+
+Binaries on your CDN should be located in a subdirectory of the above base URL. For example, `/vxx.xx.xx/*.tar.gz` should be located under `/geckodriver/download` above.
+
+Alternatively, you can add the same property to your .npmrc file.
+
+Default location is set to https://github.com/mozilla/geckodriver/releases/download
 
 # Programmatic Interface
 
