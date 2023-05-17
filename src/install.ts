@@ -47,11 +47,11 @@ export async function download (geckodriverVersion: string = process.env.GECKODR
       throw new Error(`Couldn't find version property in Cargo.toml file: ${toml}`)
     }
     geckodriverVersion = version.split(' = ').pop().slice(1, -1)
-    console.log(`Detected Geckodriver v${geckodriverVersion} to be latest`)
+    log.info(`Detected Geckodriver v${geckodriverVersion} to be latest`)
   }
 
   const url = getDownloadUrl(geckodriverVersion)
-  console.log(`Downloading Geckodriver from ${url}`)
+  log.info(`Downloading Geckodriver from ${url}`)
   const res = await fetch(url, fetchOpts)
 
   if (!res.body) {
