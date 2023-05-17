@@ -39,7 +39,7 @@ To get a list of available CLI options run `npx geckodriver --help`. By default 
 
 ```sh
 $ npm i geckodriver
-$ GECKODRIVER_VERSION="0.33.0" npx geckodriver --version
+$ GECKODRIVER_VERSION="0.31.0" npx geckodriver --version
 geckodriver 0.31.0 (b617178ef491 2022-04-06 11:57 +0000)
 
 The source code of this program is available from
