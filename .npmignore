@@ -1,6 +1,8 @@
-.git
-geckodriver
-geckodriver.tar.gz
-.idea
-!bin/geckodriver
-.github
+src
+tests
+coverage
+*.tgz
+/.*
+/*.mjs
+/tsconfig.json
+vitest.config.ts

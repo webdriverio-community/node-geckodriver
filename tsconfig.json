@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+      "module": "ESNext",
+      "target": "ES2020",
+      "baseUrl": "src",
+      "outDir": "./dist",
+      "moduleResolution": "node",
+      "declaration": true,
+      "declarationMap": true,
+      "noUnusedLocals": true,
+      "skipLibCheck": true,
+      "sourceMap": true,
+      "allowSyntheticDefaultImports": true,
+      "newLine": "lf",
+      "noEmitOnError": true,
+      "lib": ["ES2020"],
+      "noImplicitAny": true,
+      "resolveJsonModule": true,
+      "experimentalDecorators": true,
+      "checkJs": true,
+      "types": ["node"]
+    },
+    "include": ["src/**/*", "src/cjs/package.json"],
+    "ignore": ["node_modules", "dist"]
+  }
+  

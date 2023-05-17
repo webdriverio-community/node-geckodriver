@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+*
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: 💚 Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: 🚧 Install Dependencies
+        run: npm ci
+      - name: 📦 Build
+        run: npm run build
+      - name: 🧪 Run Tests
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: npm test

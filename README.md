@@ -1,153 +1,185 @@
-## node-geckodriver [![Build Status](https://github.com/vladikoff/node-geckodriver/workflows/Tests/badge.svg)](https://github.com/vladikoff/node-geckodriver/actions?workflow=Tests) [![npm package](https://img.shields.io/npm/v/geckodriver.svg)](https://www.npmjs.com/package/geckodriver)
+Geckodriver [![CI](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/ci.yml/badge.svg)](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/ci.yml) [![Audit](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/audit.yml/badge.svg)](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/audit.yml)
+==========
 
-> Downloader for [github.com/mozilla/geckodriver/releases](https://github.com/mozilla/geckodriver/releases)
+An NPM wrapper for Mozilla's [Geckodriver](https://github.com/mozilla/geckodriver). It manages to download various (or the latest) Geckodriver versions and provides a programmatic interface to start and stop it within Node.js. __Note:__ this is a wrapper module. If you discover any bugs with Geckodriver, please report them in the [official repository](https://github.com/mozilla/geckodriver).
 
-This puts `geckodriver` or `geckodriver.exe` into root of this module.
+# Installing
 
-## Install
+You can install this package via:
 
-```
+```sh
 npm install geckodriver
 ```
 
-## Usage
+Once installed you can start Geckodriver via:
 
-There are several ways to use this module:
-
-### Use the provided `geckodriver` from `bin` directory.
-
-```
-bin/geckodriver [args]
+```sh
+npx geckodriver --port=4444
 ```
 
-### Use it by requiring:
+By default, this package downloads Geckodriver when used for the first time through the CLI or the programmatical interface. If you like to download it as part of the NPM install process, set the `GECKODRIVER_AUTO_INSTALL` environment flag, e.g.:
 
-```
-require('geckodriver');
-```
-
-### Use it by setting WebDriver capabilities:
-
-```
-profile.setPreference('marionette', true);
-// Add log level if needed:
-// profile.setPreference('marionette.logging', 'TRACE');
+```sh
+GECKODRIVER_AUTO_INSTALL=1 npm i
 ```
 
-### Use it globally:
+To get a list of available CLI options run `npx geckodriver --help`. By default this package downloads the latest version of the driver. If you prefer to have it install a custom Geckodriver version you can define the environment variable `GECKODRIVER_VERSION` when running in CLI, e.g.:
 
-```
-npm install -g geckodriver
-geckodriver [args]
-```
+```sh
+$ npm i geckodriver
+$ GECKODRIVER_VERSION="0.33.0" npx geckodriver --version
+geckodriver 0.31.0 (b617178ef491 2022-04-06 11:57 +0000)
 
-Note: This installs a `geckodriver` shell script that runs the executable, but on Windows, selenium-webdriver looks for `geckodriver.exe`. To use a global installation of this package with selenium-webdriver on Windows, copy or link `geckodriver.exe` to a location on your PATH (such as the NPM bin directory) after installing this package:
+The source code of this program is available from
+testing/geckodriver in https://hg.mozilla.org/mozilla-central.
 
-```
-mklink %USERPROFILE%\AppData\Roaming\npm\geckodriver.exe %USERPROFILE%\AppData\Roaming\npm\node_modules\geckodriver\geckodriver.exe
-```
-
-## Setting a CDN URL for binary download
-
-To set an alternate CDN location for geckodriver binaries, set the `GECKODRIVER_CDNURL` like this:
-
-```
-GECKODRIVER_CDNURL=https://INTERNAL_CDN/geckodriver/download
+This program is subject to the terms of the Mozilla Public License 2.0.
+You can obtain a copy of the license at https://mozilla.org/MPL/2.0/.
 ```
 
-Binaries on your CDN should be located in a subdirectory of the above base URL. For example, `/vxx.xx.xx/*.tar.gz` should be located under `/geckodriver/download` above.
+# Programmatic Interface
 
-Alternatively, you can add the same property to your `.npmrc` file.
+You can import this package with Node.js and start the driver as part of your script and use it e.g. with [WebdriverIO](https://webdriver.io).
 
-Default location is set to https://github.com/mozilla/geckodriver/releases/download
+## Exported Methods
 
-## Setting a PROXY URL
+The package exports a `start` and `download` method.
 
-Use `HTTPS_PROXY` or `HTTP_PROXY` to set your proxy url.
+### `start`
 
-## Setting a specific version
+Starts an Geckodriver instance and returns a [`ChildProcess`](https://nodejs.org/api/child_process.html#class-childprocess). If Geckodriver is not downloaded it will download it for you.
 
-Use `GECKODRIVER_VERSION` if you require a specific version of gecko driver for your browser version.
+__Params:__ `GeckodriverParameters` - options to pass into Geckodriver (see below)
 
-## Using a cached download
+__Example:__
 
-Use `GECKODRIVER_FILEPATH` to point to a pre-downloaded geckodriver archive that should be extracted during installation.
+```js
+import { start } from 'geckodriver';
+import { remote } from 'webdriverio';
+import waitPort from 'wait-port';
 
-## Skipping geckodriver download
+/**
+ * first start Geckodriver
+ */
+const cp = await start({ port: 4444 });
 
-Use `GECKODRIVER_SKIP_DOWNLOAD` to skip the download of the geckodriver file.
+/**
+ * wait for Geckodriver to be up
+ */
+await waitPort({ port: 4444 });
 
+/**
+ * then start WebdriverIO session
+ */
+const browser = await remote({ capabilities: { browserName: 'firefox' } });
+await browser.url('https://webdriver.io');
+console.log(await browser.getTitle()); // prints "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js | WebdriverIO"
 
-## Related Projects
+/**
+ * kill Geckodriver process
+ */
+cp.kill();
+```
 
-* [node-chromedriver](https://github.com/giggio/node-chromedriver)
+__Note:__ as you can see in the example above this package does not wait for the driver to be up, you have to manage this yourself through packages like [`wait-on`](https://github.com/jeffbski/wait-on).
 
-## Versions
+### `download`
 
-* [npm module version] - [geckodriver version]
-* 4.0.0 - geckodriver 0.32.0.
-* 3.2.0 - geckodriver 0.32.0, arm64 support.
-* 3.1.0 - geckodriver 0.31.0
-* 3.0.x - geckodriver 0.30.0, refactored logic, dependency updates.
-* 2.00.x - geckodriver 0.29.1, support changed to node v12+
-* 1.22.x - geckodriver 0.29.0
-* 1.21.x - geckodriver 0.28.0
-* 1.20.x - geckodriver 0.27.0
-* 1.19.x - geckodriver 0.26.0
-* 1.18.x - geckodriver 0.26.0
-* 1.17.x - geckodriver 0.25.0
-* 1.16.x - geckodriver 0.24.0 and `GECKODRIVER_VERSION` env support
-* 1.15.x - geckodriver 0.24.0
-* 1.14.x - geckodriver 0.23.0
-* 1.13.x - geckodriver 0.22.0
-* 1.12.x - geckodriver 0.21.0
-* 1.11.x - geckodriver 0.20.0
-* 1.10.x - geckodriver 0.19.1
-* 1.9.x - geckodriver 0.19.0
-* 1.8.x - geckodriver 0.18.0
-* 1.7.x - geckodriver 0.17.0
-* 1.6.x - geckodriver 0.16.1
-* 1.5.x - geckodriver 0.15.0
-* 1.4.x - geckodriver 0.14.0
-* 1.3.x - geckodriver 0.13.0
-* 1.2.x - geckodriver 0.11.1
-* 1.1.x - geckodriver 0.10
+Method to download an Geckodriver with a particular version. If version parameter is omitted it tries to download the latest available version of the driver.
 
-## Changelog
+__Params:__ `string` - version of Geckodriver to download (optional)
 
-* 4.0.0 - requires node 14+, drops support for node 12.
-* 3.2.0 - geckodriver 0.32.0, arm64 support for Mac, Linux and Windows, added `GECKODRIVER_ARCH` for custom arch downloads.
-* 3.1.0 - geckodriver 0.31.0
-* 2.0.1 - fixed proxy download behaviour.
-* 1.20.0 - geckodriver 27. Requires node 8 and higher. Support `HTTPS_PROXY` env and npm_config_geckodriver_version variables.
-* 1.19.0 - geckodriver 26. Dependency updates.
-* 1.18.0 - geckodriver 26.
-* 1.17.0 - geckodriver 25.
-* 1.16.2 - fix issue with 'tar' dependency.
-* 1.16.1 - added support for `GECKODRIVER_FILEPATH` env variable. 
-* 1.16.0 - added support for `GECKODRIVER_VERSION` env variable. Set it to `'0.24.0'` to fetch that version.
-* 1.15.1 - fix for the new `.npmignore` pattern matching
-* 1.15.0 - geckodriver 0.24.0
-* 1.14.0 - geckodriver 0.23.0
-* 1.13.0 - geckodriver 0.22.0
-* 1.12.2 - add proxy settings
-* 1.12.1 - adm-zip security fix
-* 1.12.0 - geckodriver 0.21.0
-* 1.11.0 - geckodriver 0.20.0
-* 1.10.0 - geckodriver 0.19.1, switch tar package, enable Win32 builds again, process.env.npm_config_geckodriver_cdnurl support
-* 1.9.0 - updated to geckodriver 0.19.0 32-bit windows support removed.
-* 1.8.1 - added geckodriver.exe bin for Windows
-* 1.8.0 - updated to geckodriver 0.18.0
-* 1.7.1 - 'GECKODRIVER_CDNURL' support added.
-* 1.7.0 - updated to geckodriver 0.17.0  32-bit linux support added.
-* 1.6.1 - updated to geckodriver 0.16.1
-* 1.6.0 - updated to geckodriver 0.16.0. 32-bit linux support removed.
-* 1.5.0 - updated to geckodriver 0.15.0.
-* 1.4.0 - updated to geckodriver 0.14.0.
-* 1.3.0 - updated to geckodriver 0.13.0.
-* 1.2.1 - added support for Linux 32-bit.
-* 1.2.0 - updated to geckodriver 0.11.1.
-* 1.1.3 - adds Windows support, fixes Windows tests.
-* 1.1.2 - fixed `require` by pointing `package.json main` property to the `lib` file.
-* 1.1.0 - programmatic usage, added `bin` support.
-* 1.0.0 - init release
+## CJS Support
+
+In case your module uses CJS you can use this package as follows:
+
+```js
+const { start } = require('geckodriver')
+// see example above
+```
+
+## Options
+
+The `start` method offers the following options to be passed on to the actual Geckodriver CLI.
+
+### allowHosts
+
+List of hostnames to allow. By default the value of --host is allowed, and in addition if that's a well known local address, other variations on well known local addresses are allowed. If --allow-hosts is provided only exactly those hosts are allowed.
+
+Type: `string[]`<br />
+Default: `[]`
+
+### allowOrigins
+List of request origins to allow. These must be formatted as scheme://host:port. By default any request with an origin header is rejected. If `--allow-origins` is provided then only exactly those origins are allowed.
+
+Type: `string[]`<br />
+Default: `[]`
+
+### binary
+Path to the Firefox binary.
+
+Type: `string`
+
+### connectExisting
+Connect to an existing Firefox instance.
+
+Type: `boolean`<br />
+Default: `false`
+
+### host
+Host IP to use for WebDriver server.
+
+Type: `string`<br />
+Default: `127.0.0.1`
+
+### jsdebugger
+Attach browser toolbox debugger for Firefox.
+
+Type: `boolean`<br />
+Default: `false`
+
+### log
+Set Gecko log level [possible values: `fatal`, `error`, `warn`, `info`, `config`, `debug`, `trace`].
+
+Type: `string`
+
+### logNoTruncated
+Write server log to file instead of stderr, increases log level to `INFO`.
+
+Type: `boolean`
+
+### marionetteHost
+Host to use to connect to Gecko.
+
+Type: `boolean`<br />
+Default: `127.0.0.1`
+
+### marionettePort
+Port to use to connect to Gecko.
+
+Type: `number`<br />
+Default: `0`
+
+### port
+Port to listen on.
+
+Type: `number`
+
+### profileRoot
+Directory in which to create profiles. Defaults to the system temporary directory.
+
+Type: `string`
+
+### geckoDriverVersion
+Version of Geckodriver to start. See https://github.com/mozilla/geckodriver/releases for all available versions, platforms and architecture.
+
+Type: `string`
+
+### customGeckoDriverPath
+Don't download Geckodriver, instead use a custom path to it, e.g. a cached binary.
+
+Type: `string`
+
+---
+
+For more information on WebdriverIO see the [homepage](https://webdriver.io).
