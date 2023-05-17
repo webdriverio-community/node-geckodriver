@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getDownloadUrl 1`] = `"https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux32.tar.gz"`;
+
+exports[`getDownloadUrl 2`] = `"https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux-aarch64.tar.gz"`;
+
+exports[`getDownloadUrl 3`] = `"https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-win32.zip"`;
+
+exports[`getDownloadUrl 4`] = `"https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-win-aarch64.zip"`;
+
+exports[`getDownloadUrl 5`] = `"https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-macos.tar.gz"`;
+
+exports[`getDownloadUrl 6`] = `"https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-macos-aarch64.tar.gz"`;
+
+exports[`parseParams 1`] = `
+[
+  "--base-url=foobar",
+  "--silent",
+  "--allowed-ips=123",
+  "--allowed-ips=321",
+]
+`;
