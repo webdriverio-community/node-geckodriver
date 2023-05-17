@@ -47,11 +47,11 @@ export async function download (geckodriverVersion: string = process.env.GECKODR
       throw new Error(`Couldn't find version property in Cargo.toml file: ${toml}`)
     }
     geckodriverVersion = version.split(' = ').pop().slice(1, -1)
-    log.info(`Detected Geckodriver v${geckodriverVersion} to be latest`)
+    console.log(`Detected Geckodriver v${geckodriverVersion} to be latest`)
   }
 
   const url = getDownloadUrl(geckodriverVersion)
-  log.info(`Downloading Geckodriver from ${url}`)
+  console.log(`Downloading Geckodriver from ${url}`)
   const res = await fetch(url, fetchOpts)
 
   if (!res.body) {
@@ -59,7 +59,6 @@ export async function download (geckodriverVersion: string = process.env.GECKODR
   }
 
   await fsp.mkdir(targetDir, { recursive: true })
-
   await (url.endsWith('.zip')
     ? downloadZip(res.body, targetDir)
     : streamPipeline(res.body, zlib.createGunzip(), tar.extract(targetDir)))
