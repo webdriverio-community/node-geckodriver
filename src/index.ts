@@ -5,7 +5,7 @@ import cp from 'node:child_process'
 import { download as downloadDriver } from './install.js'
 import { hasAccess, parseParams } from './utils.js'
 import { BINARY_FILE } from './constants.js'
-import type { GeckodriverParameters } from 'types.js'
+import type { GeckodriverParameters } from './types.js'
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
