@@ -3,7 +3,7 @@ exports.start = async function start (params: unknown) {
   return esmPkg.start(params)
 }
 
-exports.download = async function download (params?: string) {
+exports.download = async function download (geckodriverVersion?: string, cacheDir?: string) {
   const esmPkg = await import('../index.js')
-  return esmPkg.download(params)
+  return esmPkg.download(geckodriverVersion, cacheDir)
 }

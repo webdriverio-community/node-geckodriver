@@ -1,27 +1,24 @@
-import url from 'node:url'
-import path from 'node:path'
 import cp from 'node:child_process'
 
 import { download as downloadDriver } from './install.js'
 import { hasAccess, parseParams } from './utils.js'
-import { BINARY_FILE } from './constants.js'
+import { DEFAULT_HOSTNAME } from './constants.js'
 import type { GeckodriverParameters } from './types.js'
 
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
-
 export async function start (params: GeckodriverParameters) {
-  const customGeckoDriverPath = process.env.GECKODRIVER_FILEPATH || params.customGeckoDriverPath
-  if (!customGeckoDriverPath) {
-    await downloadDriver(params.geckoDriverVersion)
+  let geckoDriverPath = process.env.GECKODRIVER_FILEPATH || params.customGeckoDriverPath
+  if (!geckoDriverPath) {
+    geckoDriverPath = await downloadDriver(params.geckoDriverVersion, params.cacheDir)
   }
-  const targetDir = path.resolve(__dirname, '..', '.bin')
-  const binaryFilePath = customGeckoDriverPath || path.resolve(targetDir, BINARY_FILE)
 
-  if (!(await hasAccess(binaryFilePath))) {
+  if (!(await hasAccess(geckoDriverPath))) {
     throw new Error('Failed to access Geckodriver, was it installed successfully?')
   }
 
-  return cp.spawn(binaryFilePath, parseParams(params))
+  if (!params.host) {
+    params.host = DEFAULT_HOSTNAME
+  }
+  return cp.spawn(geckoDriverPath, parseParams(params))
 }
 
 export const download = downloadDriver

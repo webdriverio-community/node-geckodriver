@@ -10,6 +10,7 @@ try {
   await waitPort({ port: 4444 })
   const browser = await remote({
     automationProtocol: 'webdriver',
+    hostname: '0.0.0.0',
     capabilities: {
       browserName: 'firefox',
       'moz:firefoxOptions': {

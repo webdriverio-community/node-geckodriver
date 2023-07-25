@@ -160,7 +160,7 @@ Default: `false`
 Host IP to use for WebDriver server.
 
 Type: `string`<br />
-Default: `127.0.0.1`
+Default: `0.0.0.0`
 
 ### jsdebugger
 Attach browser toolbox debugger for Firefox.
@@ -210,6 +210,12 @@ Don't download Geckodriver, instead use a custom path to it, e.g. a cached binar
 
 Type: `string`<br />
 Default: `process.env.GECKODRIVER_FILEPATH`
+
+### cacheDir
+The path to the root of the cache directory.
+
+Type: `string`<br />
+Default: `process.env.GECKODRIVER_CACHE_DIR`
 
 # Other Browser Driver
 

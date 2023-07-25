@@ -1,4 +1,4 @@
-import url from 'node:url'
+import os from 'node:os'
 import path from 'node:path'
 import util from 'node:util'
 import stream from 'node:stream'
@@ -18,7 +18,6 @@ import { BINARY_FILE, MOZ_CENTRAL_CARGO_TOML } from './constants.js'
 import { hasAccess, getDownloadUrl } from './utils.js'
 
 const streamPipeline = util.promisify(stream.pipeline)
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 const log = logger('geckodriver')
 
 const fetchOpts: RequestInit = {}
@@ -28,9 +27,15 @@ if (process.env.HTTPS_PROXY) {
   fetchOpts.agent = new HttpProxyAgent(process.env.HTTP_PROXY)
 }
 
-export async function download (geckodriverVersion: string = process.env.GECKODRIVER_VERSION) {
-  const targetDir = path.resolve(__dirname, '..', '.bin')
-  const binaryFilePath = path.resolve(targetDir, BINARY_FILE)
+export async function download (
+  geckodriverVersion: string = process.env.GECKODRIVER_VERSION,
+  cacheDir: string = process.env.GECKODRIVER_CACHE_DIR || os.tmpdir()
+) {
+  if (!await hasAccess(cacheDir)) {
+    await fsp.mkdir(cacheDir, { recursive: true })
+  }
+
+  const binaryFilePath = path.resolve(cacheDir, BINARY_FILE)
 
   if (await hasAccess(binaryFilePath)) {
     return binaryFilePath
@@ -58,16 +63,16 @@ export async function download (geckodriverVersion: string = process.env.GECKODR
     throw new Error(`Failed to download binary (statusCode ${res.status}): ${res.statusText}`)
   }
 
-  await fsp.mkdir(targetDir, { recursive: true })
+  await fsp.mkdir(cacheDir, { recursive: true })
   await (url.endsWith('.zip')
-    ? downloadZip(res.body, targetDir)
-    : streamPipeline(res.body, zlib.createGunzip(), tar.extract(targetDir)))
+    ? downloadZip(res.body, cacheDir)
+    : streamPipeline(res.body, zlib.createGunzip(), tar.extract(cacheDir)))
 
   await fsp.chmod(binaryFilePath, '755')
   return binaryFilePath
 }
 
-function downloadZip(body: NodeJS.ReadableStream, targetDir: string) {
+function downloadZip(body: NodeJS.ReadableStream, cacheDir: string) {
   const stream = Readable.from(body).pipe(unzipper.Parse())
   const promiseChain: Promise<string | void>[] = [
     new Promise((resolve, reject) => {
@@ -77,7 +82,7 @@ function downloadZip(body: NodeJS.ReadableStream, targetDir: string) {
   ]
 
   stream.on('entry', async (entry: Entry) => {
-    const unzippedFilePath = path.join(targetDir, entry.path)
+    const unzippedFilePath = path.join(cacheDir, entry.path)
     if (entry.type === 'Directory') {
       return
     }

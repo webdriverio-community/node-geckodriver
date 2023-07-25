@@ -1,18 +1,10 @@
-import url from 'node:url'
-import path from 'node:path'
 import cp from 'node:child_process'
 
 import { download } from './install.js'
 import { hasAccess } from './utils.js'
-import { BINARY_FILE } from './constants.js'
-
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
 export default async function run () {
-  await download()
-  const targetDir = path.resolve(__dirname, '..', '.bin')
-  const binaryFilePath = path.resolve(targetDir, BINARY_FILE)
-
+  const binaryFilePath = await download()
   if (!(await hasAccess(binaryFilePath))) {
     throw new Error('Failed to download Geckodriver')
   }
