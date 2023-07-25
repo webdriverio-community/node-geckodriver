@@ -1,6 +1,6 @@
 {
   "name": "geckodriver",
-  "version": "4.0.5",
+  "version": "4.1.0",
   "description": "Mozilla's Geckodriver for Node.js",
   "homepage": "https://github.com/webdriverio-community/node-geckodriver#readme",
   "author": {
