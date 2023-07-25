@@ -31,10 +31,6 @@ export async function download (
   geckodriverVersion: string = process.env.GECKODRIVER_VERSION,
   cacheDir: string = process.env.GECKODRIVER_CACHE_DIR || os.tmpdir()
 ) {
-  if (!await hasAccess(cacheDir)) {
-    await fsp.mkdir(cacheDir, { recursive: true })
-  }
-
   const binaryFilePath = path.resolve(cacheDir, BINARY_FILE)
   if (await hasAccess(binaryFilePath)) {
     return binaryFilePath
