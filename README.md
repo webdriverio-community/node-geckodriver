@@ -215,7 +215,7 @@ Default: `process.env.GECKODRIVER_FILEPATH`
 The path to the root of the cache directory.
 
 Type: `string`<br />
-Default: `process.env.GECKODRIVER_CACHE_DIR`
+Default: `process.env.GECKODRIVER_CACHE_DIR || os.tmpdir()`
 
 # Other Browser Driver
 

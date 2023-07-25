@@ -36,7 +36,6 @@ export async function download (
   }
 
   const binaryFilePath = path.resolve(cacheDir, BINARY_FILE)
-
   if (await hasAccess(binaryFilePath)) {
     return binaryFilePath
   }
