@@ -2,7 +2,7 @@ import cp from 'node:child_process'
 
 import { download as downloadDriver } from './install.js'
 import { hasAccess, parseParams } from './utils.js'
-import { DEFAULT_HOSTNAME } from './constants.js'
+import { DEFAULT_HOSTNAME, log } from './constants.js'
 import type { GeckodriverParameters } from './types.js'
 
 export async function start (params: GeckodriverParameters) {
@@ -15,10 +15,11 @@ export async function start (params: GeckodriverParameters) {
     throw new Error('Failed to access Geckodriver, was it installed successfully?')
   }
 
-  if (!params.host) {
-    params.host = DEFAULT_HOSTNAME
-  }
-  return cp.spawn(geckoDriverPath, parseParams(params))
+  params.host = params.host || DEFAULT_HOSTNAME
+
+  const args = parseParams(params)
+  log.info(`Starting Geckodriver at ${geckoDriverPath} with params: ${args.join(' ')}`)
+  return cp.spawn(geckoDriverPath, args)
 }
 
 export const download = downloadDriver

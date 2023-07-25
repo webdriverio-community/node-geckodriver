@@ -12,13 +12,11 @@ import fetch, { type RequestInit } from 'node-fetch'
 import { HttpsProxyAgent } from 'https-proxy-agent'
 import { HttpProxyAgent } from 'http-proxy-agent'
 import unzipper, { type Entry } from 'unzipper'
-import logger from '@wdio/logger'
 
-import { BINARY_FILE, MOZ_CENTRAL_CARGO_TOML } from './constants.js'
+import { BINARY_FILE, MOZ_CENTRAL_CARGO_TOML, log } from './constants.js'
 import { hasAccess, getDownloadUrl } from './utils.js'
 
 const streamPipeline = util.promisify(stream.pipeline)
-const log = logger('geckodriver')
 
 const fetchOpts: RequestInit = {}
 if (process.env.HTTPS_PROXY) {
