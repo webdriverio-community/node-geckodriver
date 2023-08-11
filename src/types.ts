@@ -57,6 +57,10 @@ export interface GeckodriverParameters {
    */
   port?: number
   /**
+   * port to use for Debugger / Webdriver BiDi
+   */
+  websocketPort?: number
+  /**
    * Directory in which to create profiles. Defaults to the system temporary directory.
    */
   profileRoot?: string
