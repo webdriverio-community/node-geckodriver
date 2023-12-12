@@ -8,13 +8,13 @@ import zlib from 'node:zlib'
 import { Readable } from 'node:stream'
 
 import tar from 'tar-fs'
-import fetch, { type RequestInit } from 'node-fetch'
+import { type RequestInit } from 'node-fetch'
 import { HttpsProxyAgent } from 'https-proxy-agent'
 import { HttpProxyAgent } from 'http-proxy-agent'
 import unzipper, { type Entry } from 'unzipper'
 
 import { BINARY_FILE, MOZ_CENTRAL_CARGO_TOML, log } from './constants.js'
-import { hasAccess, getDownloadUrl } from './utils.js'
+import { hasAccess, getDownloadUrl, retryFetch } from './utils.js'
 
 const streamPipeline = util.promisify(stream.pipeline)
 
@@ -38,7 +38,7 @@ export async function download (
    * get latest version of Geckodriver
    */
   if (!geckodriverVersion) {
-    const res = await fetch(MOZ_CENTRAL_CARGO_TOML, fetchOpts)
+    const res = await retryFetch(MOZ_CENTRAL_CARGO_TOML, fetchOpts)
     const toml = await res.text()
     const version = toml.split('\n').find((l) => l.startsWith('version = '))
     if (!version) {
@@ -50,7 +50,7 @@ export async function download (
 
   const url = getDownloadUrl(geckodriverVersion)
   log.info(`Downloading Geckodriver from ${url}`)
-  const res = await fetch(url, fetchOpts)
+  const res = await retryFetch(url, fetchOpts)
 
   if (res.status !== 200) {
     throw new Error(`Failed to download binary (statusCode ${res.status}): ${res.statusText}`)

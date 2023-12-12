@@ -29,13 +29,13 @@ Once installed you can start Geckodriver via:
 npx geckodriver --port=4444
 ```
 
-By default, this package downloads Geckodriver when used for the first time through the CLI or the programmatical interface. If you like to download it as part of the NPM install process, set the `GECKODRIVER_AUTO_INSTALL` environment flag, e.g.:
+By default, this package downloads Geckodriver when used for the first time through the CLI or the programmatic interface. If you like to download it as part of the NPM install process, set the `GECKODRIVER_AUTO_INSTALL` environment flag, e.g.:
 
 ```sh
 GECKODRIVER_AUTO_INSTALL=1 npm i
 ```
 
-To get a list of available CLI options run `npx geckodriver --help`. By default this package downloads the latest version of the driver. If you prefer to have it install a custom Geckodriver version you can define the environment variable `GECKODRIVER_VERSION` when running in CLI, e.g.:
+To get a list of available CLI options run `npx geckodriver --help`. By default, this package downloads the latest version of the driver. If you prefer to have it install a custom Geckodriver version you can define the environment variable `GECKODRIVER_VERSION` when running in CLI, e.g.:
 
 ```sh
 $ npm i geckodriver
@@ -51,7 +51,7 @@ You can obtain a copy of the license at https://mozilla.org/MPL/2.0/.
 
 ## Setting a CDN URL for binary download
 
-To set an alternate CDN location for geckodriver binaries, set the `GECKODRIVER_CDNURL` like this:
+To set an alternate CDN location for Geckodriver binaries, set the `GECKODRIVER_CDNURL` like this:
 
 ```sh
 GECKODRIVER_CDNURL=https://INTERNAL_CDN/geckodriver/download
@@ -61,11 +61,11 @@ Binaries on your CDN should be located in a subdirectory of the above base URL. 
 
 Alternatively, you can add the same property to your .npmrc file.
 
-Default location is set to https://github.com/mozilla/geckodriver/releases/download
+The default location is set to https://github.com/mozilla/geckodriver/releases/download
 
 ## Setting a PROXY URL
 
-Use `HTTPS_PROXY` or `HTTP_PROXY` to set your proxy url.
+Use `HTTPS_PROXY` or `HTTP_PROXY` to set your proxy URL.
 
 # Programmatic Interface
 
@@ -77,7 +77,7 @@ The package exports a `start` and `download` method.
 
 ### `start`
 
-Starts an Geckodriver instance and returns a [`ChildProcess`](https://nodejs.org/api/child_process.html#class-childprocess). If Geckodriver is not downloaded it will download it for you.
+Starts a Geckodriver instance and returns a [`ChildProcess`](https://nodejs.org/api/child_process.html#class-childprocess). If Geckodriver is not downloaded it will download it for you.
 
 __Params:__ `GeckodriverParameters` - options to pass into Geckodriver (see below)
 
@@ -115,7 +115,7 @@ __Note:__ as you can see in the example above this package does not wait for the
 
 ### `download`
 
-Method to download an Geckodriver with a particular version. If version parameter is omitted it tries to download the latest available version of the driver.
+Method to download a Geckodriver with a particular version. If a version parameter is omitted it tries to download the latest available version of the driver.
 
 __Params:__ `string` - version of Geckodriver to download (optional)
 
@@ -132,86 +132,86 @@ const { start } = require('geckodriver')
 
 The `start` method offers the following options to be passed on to the actual Geckodriver CLI.
 
-### allowHosts
+### `allowHosts`
 
-List of hostnames to allow. By default the value of --host is allowed, and in addition if that's a well known local address, other variations on well known local addresses are allowed. If --allow-hosts is provided only exactly those hosts are allowed.
-
-Type: `string[]`<br />
-Default: `[]`
-
-### allowOrigins
-List of request origins to allow. These must be formatted as scheme://host:port. By default any request with an origin header is rejected. If `--allow-origins` is provided then only exactly those origins are allowed.
+List of host names to allow. By default, the value of --host is allowed, and in addition, if that's a well-known local address, other variations on well-known local addresses are allowed. If --allow-hosts is provided only exactly those hosts are allowed.
 
 Type: `string[]`<br />
 Default: `[]`
 
-### binary
+### `allowOrigins`
+List of request origins to allow. These must be formatted as `scheme://host:port`. By default, any request with an origin header is rejected. If `--allow-origins` is provided then only exactly those origins are allowed.
+
+Type: `string[]`<br />
+Default: `[]`
+
+### `binary`
 Path to the Firefox binary.
 
 Type: `string`
 
-### connectExisting
+### `connectExisting`
 Connect to an existing Firefox instance.
 
 Type: `boolean`<br />
 Default: `false`
 
-### host
+### `host`
 Host IP to use for WebDriver server.
 
 Type: `string`<br />
 Default: `0.0.0.0`
 
-### jsdebugger
+### `jsdebugger`
 Attach browser toolbox debugger for Firefox.
 
 Type: `boolean`<br />
 Default: `false`
 
-### log
+### `log`
 Set Gecko log level [possible values: `fatal`, `error`, `warn`, `info`, `config`, `debug`, `trace`].
 
 Type: `string`
 
-### logNoTruncated
+### `logNoTruncated`
 Write server log to file instead of stderr, increases log level to `INFO`.
 
 Type: `boolean`
 
-### marionetteHost
+### `marionetteHost`
 Host to use to connect to Gecko.
 
 Type: `boolean`<br />
 Default: `127.0.0.1`
 
-### marionettePort
+### `marionettePort`
 Port to use to connect to Gecko.
 
 Type: `number`<br />
 Default: `0`
 
-### port
+### `port`
 Port to listen on.
 
 Type: `number`
 
-### profileRoot
+### `profileRoot`
 Directory in which to create profiles. Defaults to the system temporary directory.
 
 Type: `string`
 
-### geckoDriverVersion
-Version of Geckodriver to start. See https://github.com/mozilla/geckodriver/releases for all available versions, platforms and architecture.
+### `geckoDriverVersion`
+A version of Geckodriver to start. See https://github.com/mozilla/geckodriver/releases for all available versions, platforms and architecture.
 
 Type: `string`
 
-### customGeckoDriverPath
+### `customGeckoDriverPath`
 Don't download Geckodriver, instead use a custom path to it, e.g. a cached binary.
 
 Type: `string`<br />
 Default: `process.env.GECKODRIVER_FILEPATH`
 
-### cacheDir
+### `cacheDir`
 The path to the root of the cache directory.
 
 Type: `string`<br />
@@ -219,7 +219,7 @@ Default: `process.env.GECKODRIVER_CACHE_DIR || os.tmpdir()`
 
 # Other Browser Driver
 
-If you also look for other browser driver NPM wrapper, you can find them here:
+If you also look for other browser driver NPM wrappers, you can find them here:
 
 - Chrome: [giggio/node-chromedriver](https://github.com/giggio/node-chromedriver)
 - Microsoft Edge: [webdriverio-community/node-edgedriver](https://github.com/webdriverio-community/node-edgedriver)

@@ -1,13 +1,18 @@
 import os from 'node:os'
 import { vi, test, expect } from 'vitest'
+import fetch from 'node-fetch'
 
-import { getDownloadUrl, parseParams } from '../src/utils.js'
+import { getDownloadUrl, parseParams, retryFetch } from '../src/utils.js'
 
 vi.mock('node:os', () => ({
   default: {
     arch: vi.fn(),
     platform: vi.fn()
   }
+}))
+
+vi.mock('node-fetch', () => ({
+  default: vi.fn()
 }))
 
 test('getDownloadUrl', () => {
@@ -34,4 +39,14 @@ test('getDownloadUrl', () => {
 test('parseParams', () => {
   expect(parseParams({ baseUrl: 'foobar', silent: true, verbose: false, allowedIps: ['123', '321'] }))
     .toMatchSnapshot()
+})
+
+test('retryFetch', async () => {
+  vi.mocked(fetch)
+    .mockRejectedValueOnce(new Error('request failed'))
+    .mockRejectedValueOnce(new Error('request failed'))
+    .mockResolvedValue('foobar' as any)
+  expect(await retryFetch('foo', { bar: 'baz' } as any)).toBe('foobar')
+  expect(fetch).toHaveBeenCalledTimes(3)
+  expect(fetch).toHaveBeenCalledWith('foo', { bar: 'baz' })
 })
