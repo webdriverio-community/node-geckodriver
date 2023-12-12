@@ -7,15 +7,17 @@ import fsp from 'node:fs/promises'
 import zlib from 'node:zlib'
 import { Readable } from 'node:stream'
 
+import logger from '@wdio/logger'
 import tar from 'tar-fs'
 import { type RequestInit } from 'node-fetch'
 import { HttpsProxyAgent } from 'https-proxy-agent'
 import { HttpProxyAgent } from 'http-proxy-agent'
 import unzipper, { type Entry } from 'unzipper'
 
-import { BINARY_FILE, MOZ_CENTRAL_CARGO_TOML, log } from './constants.js'
+import { BINARY_FILE, MOZ_CENTRAL_CARGO_TOML } from './constants.js'
 import { hasAccess, getDownloadUrl, retryFetch } from './utils.js'
 
+const log = logger('geckodriver')
 const streamPipeline = util.promisify(stream.pipeline)
 
 const fetchOpts: RequestInit = {}

@@ -39,8 +39,8 @@ export function parseParams(params: GeckodriverParameters) {
       if (typeof val === 'boolean' && !val) {
         return ''
       }
-      const vals = Array.isArray(val) ? val : [val]
-      return vals.map((v) => `--${decamelize(key, { separator: '-' })}${typeof v === 'boolean' ? '' : `=${v}`}`)
+      const values = Array.isArray(val) ? val : [val]
+      return values.map((v) => `--${decamelize(key, { separator: '-' })}${typeof v === 'boolean' ? '' : `=${v}`}`)
     })
     .flat()
     .filter(Boolean)

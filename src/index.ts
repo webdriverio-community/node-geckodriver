@@ -1,9 +1,12 @@
 import cp from 'node:child_process'
+import logger from '@wdio/logger'
 
 import { download as downloadDriver } from './install.js'
 import { hasAccess, parseParams } from './utils.js'
-import { DEFAULT_HOSTNAME, log } from './constants.js'
+import { DEFAULT_HOSTNAME } from './constants.js'
 import type { GeckodriverParameters } from './types.js'
+
+const log = logger('geckodriver')
 
 export async function start (params: GeckodriverParameters) {
   const { cacheDir, customGeckoDriverPath, ...startArgs } = params
