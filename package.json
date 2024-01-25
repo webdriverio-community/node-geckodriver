@@ -19,6 +19,7 @@
   },
   "scripts": {
     "build": "tsc -b .",
+    "postbuild": "sed -i '1{/^\\/\\/\\/ <reference/d}' dist/index.d.ts",
     "clean": "rimraf ./node_modules package-lock.yaml ./dist",
     "prepare": "husky install",
     "postinstall": "test -f ./dist/install.js && node ./dist/install.js || echo \"Skipping install, project not build!\"",
