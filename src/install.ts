@@ -14,7 +14,7 @@ import { HttpsProxyAgent } from 'https-proxy-agent'
 import { HttpProxyAgent } from 'http-proxy-agent'
 import unzipper, { type Entry } from 'unzipper'
 
-import { BINARY_FILE, MOZ_CENTRAL_CARGO_TOML } from './constants.js'
+import { BINARY_FILE, GECKODRIVER_RELEASES } from './constants.js'
 import { hasAccess, getDownloadUrl, retryFetch } from './utils.js'
 
 const log = logger('geckodriver')
@@ -40,13 +40,12 @@ export async function download (
    * get latest version of Geckodriver
    */
   if (!geckodriverVersion) {
-    const res = await retryFetch(MOZ_CENTRAL_CARGO_TOML, fetchOpts)
-    const toml = await res.text()
-    const version = toml.split('\n').find((l) => l.startsWith('version = '))
-    if (!version) {
-      throw new Error(`Couldn't find version property in Cargo.toml file: ${toml}`)
+    const res = await retryFetch(GECKODRIVER_RELEASES, fetchOpts)
+    const releases = await res.json() as { name: string }
+    geckodriverVersion = releases.name
+    if (!geckodriverVersion) {
+      throw new Error(`Couldn't find version name in releases: ${JSON.stringify(releases)}`)
     }
-    geckodriverVersion = version.split(' = ').pop().slice(1, -1)
     log.info(`Detected Geckodriver v${geckodriverVersion} to be latest`)
   }
 
