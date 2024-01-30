@@ -98,7 +98,7 @@ function downloadZip(body: NodeJS.ReadableStream, cacheDir: string) {
 /**
  * download on install
  */
-if (process.argv[1] && process.argv[1].endsWith('/dist/install.js') && Boolean(process.env.GECKODRIVER_AUTO_INSTALL || '1')) {
+if (process.argv[1] && process.argv[1].endsWith('/dist/install.js') && process.env.GECKODRIVER_AUTO_INSTALL) {
   await download().then(
     () => log.info('Success!'),
     (err) => log.error(`Failed to install Geckodriver: ${err.stack}`)
