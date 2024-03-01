@@ -7,13 +7,14 @@ on:
         description: "Number of the PR (without #)"
         required: true
       amount:
-        description: "The expense amount you like to grant for the contribution
-          in $"
+        description: "The expense amount you like to grant for the contribution in $"
         required: true
         type: choice
         default: "patch"
         options:
+          - 15
           - 25
+          - 35
           - 50
           - 100
           - 150
@@ -41,8 +42,7 @@ jobs:
     steps:
       - uses: octokit/request-action@v2.1.9
         with:
-          route: GET /orgs/:organisation/teams/:team/memberships/${{
-            github.actor }}
+          route: GET /orgs/:organisation/teams/:team/memberships/${{ github.actor }}
           team: technical-steering-committee
           organisation: webdriverio
         env:
