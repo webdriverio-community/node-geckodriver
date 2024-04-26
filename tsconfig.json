@@ -4,6 +4,7 @@
       "target": "ES2020",
       "baseUrl": "src",
       "outDir": "./dist",
+      "rootDir": "./src",
       "moduleResolution": "Node16",
       "declaration": true,
       "declarationMap": true,
@@ -20,6 +21,6 @@
       "checkJs": true,
       "types": ["node"]
     },
-    "include": ["src/**/*", "src/cjs/package.json", "tests"],
+    "include": ["src/**/*", "src/cjs/package.json"],
     "ignore": ["node_modules", "dist"]
   }
