@@ -16,6 +16,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
+      - name: 🦊 Setup firefox
+        id: setup-firefox
+        uses: browser-actions/setup-firefox@v1
+        with:
+          firefox-version: latest
       - name: 💚 Use Node.js
         uses: actions/setup-node@v3
         with:
