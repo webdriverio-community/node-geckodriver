@@ -14,9 +14,8 @@ exports[`getDownloadUrl 6`] = `"https://github.com/mozilla/geckodriver/releases/
 
 exports[`parseParams 1`] = `
 [
-  "--base-url=foobar",
-  "--silent",
-  "--allowed-ips=123",
-  "--allowed-ips=321",
+  "--marionette-host=foobar",
+  "--allow-origins=123",
+  "--allow-origins=321",
 ]
 `;

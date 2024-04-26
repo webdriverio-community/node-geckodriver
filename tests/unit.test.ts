@@ -37,7 +37,7 @@ test('getDownloadUrl', () => {
 })
 
 test('parseParams', () => {
-  expect(parseParams({ baseUrl: 'foobar', silent: true, verbose: false, allowedIps: ['123', '321'] }))
+  expect(parseParams({ marionetteHost: 'foobar', allowOrigins: ['123', '321'] }))
     .toMatchSnapshot()
 })
 

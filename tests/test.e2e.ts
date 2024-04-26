@@ -1,5 +1,6 @@
 import waitPort from 'wait-port'
 import { remote } from 'webdriverio'
+import { locateFirefox } from 'locate-app'
 
 import { download, start } from '../dist/index.js'
 
@@ -54,6 +55,7 @@ const port = 4444
 const cp = await start({ port })
 
 try {
+  const firefoxPath = await locateFirefox()
   await waitPort({ port })
   const browser = await remote({
     automationProtocol: 'webdriver',
@@ -61,7 +63,8 @@ try {
     capabilities: {
       browserName: 'firefox',
       'moz:firefoxOptions': {
-        args: ['-headless']
+        args: ['-headless'],
+        binary: firefoxPath
       }
     }
   })

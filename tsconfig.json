@@ -20,6 +20,6 @@
       "checkJs": true,
       "types": ["node"]
     },
-    "include": ["src/**/*", "src/cjs/package.json"],
+    "include": ["src/**/*", "src/cjs/package.json", "tests"],
     "ignore": ["node_modules", "dist"]
   }
