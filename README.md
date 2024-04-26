@@ -209,7 +209,7 @@ Type: `string`
 Don't download Geckodriver, instead use a custom path to it, e.g. a cached binary.
 
 Type: `string`<br />
-Default: `process.env.GECKODRIVER_FILEPATH`
+Default: `process.env.GECKODRIVER_PATH`
 
 ### `cacheDir`
 The path to the root of the cache directory.

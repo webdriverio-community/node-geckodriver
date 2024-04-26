@@ -10,7 +10,12 @@ const log = logger('geckodriver')
 
 export async function start (params: GeckodriverParameters) {
   const { cacheDir, customGeckoDriverPath, ...startArgs } = params
-  let geckoDriverPath = process.env.GECKODRIVER_FILEPATH || customGeckoDriverPath
+  let geckoDriverPath = (
+    customGeckoDriverPath ||
+    process.env.GECKODRIVER_PATH ||
+    // deprecated
+    process.env.GECKODRIVER_FILEPATH
+  )
   if (!geckoDriverPath) {
     geckoDriverPath = await downloadDriver(params.geckoDriverVersion, cacheDir)
   }
