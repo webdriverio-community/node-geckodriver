@@ -2,7 +2,7 @@ import waitPort from 'wait-port'
 import { remote } from 'webdriverio'
 import { locateFirefox } from 'locate-app'
 
-import { download, start } from '../dist/index.js'
+import { download, start } from '../src/index.js'
 
 // start geckodriver automatically
 console.log('= start geckodriver automatically =')
