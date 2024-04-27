@@ -59,7 +59,7 @@ try {
   await waitPort({ port })
   const firefox = await install({
     browser: Browser.FIREFOX,
-    buildId: 'latest',
+    buildId: 'stable',
     cacheDir: os.tmpdir()
   })
   const browser = await remote({
