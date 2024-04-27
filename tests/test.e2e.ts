@@ -1,7 +1,5 @@
-import os from 'node:os'
 import waitPort from 'wait-port'
 import { remote } from 'webdriverio'
-import { install, Browser } from '@puppeteer/browsers'
 
 import { download, start } from '../src/index.js'
 
@@ -28,6 +26,7 @@ try {
 console.log('= start specific geckodriver =')
 
 const binary = await download()
+let firefoxBinary: string | undefined
 
 try {
   const browser = await remote({
@@ -42,7 +41,11 @@ try {
       }
     }
   })
-  console.log(browser.capabilities);
+
+  /**
+   * reuse downloaded Firefox for next test
+   */
+  firefoxBinary = browser.requestedCapabilities['moz:firefoxOptions'].binary,
 
   await browser.url('https://webdriver.io')
   await browser.deleteSession()
@@ -59,18 +62,13 @@ const cp = await start({ port })
 
 try {
   await waitPort({ port })
-  const firefox = await install({
-    browser: Browser.FIREFOX,
-    buildId: 'stable',
-    cacheDir: os.tmpdir()
-  })
   const browser = await remote({
     automationProtocol: 'webdriver',
     port, // must set port or wdio will automatically start geckodriver
     capabilities: {
       browserName: 'firefox',
       'moz:firefoxOptions': {
-        binary: firefox.executablePath,
+        binary: firefoxBinary,
         args: ['-headless']
       }
     }

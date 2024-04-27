@@ -51,7 +51,6 @@
     "url": "https://github.com/webdriverio-community/node-geckodriver/issues"
   },
   "devDependencies": {
-    "@puppeteer/browsers": "^2.2.3",
     "@types/node": "^20.12.7",
     "@types/tar-fs": "^2.0.4",
     "@types/unzipper": "^0.10.9",
