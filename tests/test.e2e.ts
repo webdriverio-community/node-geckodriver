@@ -42,6 +42,8 @@ try {
       }
     }
   })
+  console.log(browser.capabilities);
+
   await browser.url('https://webdriver.io')
   await browser.deleteSession()
 } catch (err) {
