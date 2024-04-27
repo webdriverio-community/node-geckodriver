@@ -62,7 +62,6 @@
     "eslint-plugin-unicorn": "^52.0.0",
     "geckodriver": ".",
     "husky": "^9.0.11",
-    "locate-app": "^2.4.10",
     "npm-run-all2": "^6.1.2",
     "octokit": "^3.2.0",
     "release-it": "^17.2.1",
