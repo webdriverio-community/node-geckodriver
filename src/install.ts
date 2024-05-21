@@ -1,21 +1,20 @@
 import os from 'node:os'
-import path from 'node:path'
+import path, { dirname, join } from 'node:path'
 import util from 'node:util'
 import stream from 'node:stream'
-import fs from 'node:fs'
-import fsp from 'node:fs/promises'
+import { createWriteStream } from 'node:fs'
+import fsp, { mkdir, readFile, rm } from 'node:fs/promises'
 import zlib from 'node:zlib'
-import { Readable } from 'node:stream'
 
 import logger from '@wdio/logger'
 import tar from 'tar-fs'
 import { type RequestInit } from 'node-fetch'
 import { HttpsProxyAgent } from 'https-proxy-agent'
 import { HttpProxyAgent } from 'http-proxy-agent'
-import unzipper, { type Entry } from 'unzipper'
 
 import { BINARY_FILE, GECKODRIVER_CARGO_YAML } from './constants.js'
 import { hasAccess, getDownloadUrl, retryFetch } from './utils.js'
+import JSZip from 'jszip'
 
 const log = logger('geckodriver')
 const streamPipeline = util.promisify(stream.pipeline)
@@ -67,33 +66,37 @@ export async function download (
   return binaryFilePath
 }
 
-function downloadZip(body: NodeJS.ReadableStream, cacheDir: string) {
-  const stream = Readable.from(body).pipe(unzipper.Parse())
-  const promiseChain: Promise<string | void>[] = [
-    new Promise((resolve, reject) => {
-      stream.on('close', () => resolve())
-      stream.on('error', () => reject())
-    })
-  ]
-
-  stream.on('entry', async (entry: Entry) => {
-    const unzippedFilePath = path.join(cacheDir, entry.path)
-    if (entry.type === 'Directory') {
-      return
-    }
-
-    if (!await hasAccess(path.dirname(unzippedFilePath))) {
-      await fsp.mkdir(path.dirname(unzippedFilePath), { recursive: true })
-    }
-
-    const execStream = entry.pipe(fs.createWriteStream(unzippedFilePath))
-    promiseChain.push(new Promise((resolve, reject) => {
-      execStream.on('close', () => resolve(unzippedFilePath))
-      execStream.on('error', reject)
-    }))
+async function downloadZip(body: NodeJS.ReadableStream, cacheDir: string) {
+  const zipName = 'gecko.zip'
+  let res: (value: void | PromiseLike<void>) => void, rej: (reason?: any) => void
+  const downloaded = new Promise<void>((resolve, reject) => {
+    res = resolve
+    rej = reject
   })
-
-  return Promise.all(promiseChain)
+  body.pipe(createWriteStream(join(cacheDir, zipName), { encoding: 'binary' }))
+    .on('close', () => res())
+    .on('error', error => rej(error))
+  await downloaded
+  const zipBinary = await readFile(join(cacheDir, zipName), { encoding: 'binary' })
+  const zip = await new JSZip().loadAsync(zipBinary)
+  for (const [filePath, file] of Object.entries(zip.files)) {
+    if (file.dir) {
+      continue
+    }
+    if (!await hasAccess(dirname(filePath))) {
+      await mkdir(dirname(filePath), { recursive: true })
+    }
+    const written = new Promise<void>((resolve, reject) => {
+      res = resolve
+      rej = reject
+    })
+    file.nodeStream()
+      .pipe(createWriteStream(join(cacheDir, filePath)))
+      .on('close', () => res())
+      .on('error', error => rej(error))
+    await written
+  }
+  await rm(join(cacheDir, zipName))
 }
 
 /**
