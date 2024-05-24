@@ -2,20 +2,19 @@ import os from 'node:os'
 import path from 'node:path'
 import util from 'node:util'
 import stream from 'node:stream'
-import fs from 'node:fs'
-import fsp from 'node:fs/promises'
+import fsp, { writeFile } from 'node:fs/promises'
 import zlib from 'node:zlib'
-import { Readable } from 'node:stream'
 
 import logger from '@wdio/logger'
 import tar from 'tar-fs'
 import { type RequestInit } from 'node-fetch'
 import { HttpsProxyAgent } from 'https-proxy-agent'
 import { HttpProxyAgent } from 'http-proxy-agent'
-import unzipper, { type Entry } from 'unzipper'
 
 import { BINARY_FILE, GECKODRIVER_CARGO_YAML } from './constants.js'
 import { hasAccess, getDownloadUrl, retryFetch } from './utils.js'
+
+import { BlobReader, BlobWriter, ZipReader } from '@zip.js/zip.js'
 
 const log = logger('geckodriver')
 const streamPipeline = util.promisify(stream.pipeline)
@@ -50,7 +49,8 @@ export async function download (
     log.info(`Detected Geckodriver v${geckodriverVersion} to be latest`)
   }
 
-  const url = getDownloadUrl(geckodriverVersion)
+  let url = getDownloadUrl(geckodriverVersion)
+  url = 'http://localhost:5000/public/geckodriver.zip'
   log.info(`Downloading Geckodriver from ${url}`)
   const res = await retryFetch(url, fetchOpts)
 
@@ -60,40 +60,27 @@ export async function download (
 
   await fsp.mkdir(cacheDir, { recursive: true })
   await (url.endsWith('.zip')
-    ? downloadZip(res.body, cacheDir)
+    ? downloadZip(res, cacheDir)
     : streamPipeline(res.body, zlib.createGunzip(), tar.extract(cacheDir)))
 
   await fsp.chmod(binaryFilePath, '755')
   return binaryFilePath
 }
 
-function downloadZip(body: NodeJS.ReadableStream, cacheDir: string) {
-  const stream = Readable.from(body).pipe(unzipper.Parse())
-  const promiseChain: Promise<string | void>[] = [
-    new Promise((resolve, reject) => {
-      stream.on('close', () => resolve())
-      stream.on('error', () => reject())
-    })
-  ]
-
-  stream.on('entry', async (entry: Entry) => {
-    const unzippedFilePath = path.join(cacheDir, entry.path)
-    if (entry.type === 'Directory') {
+async function downloadZip(res: Awaited<ReturnType<typeof retryFetch>>, cacheDir: string) {
+  const zipBlob = await res.blob()
+  const zip = new ZipReader(new BlobReader(zipBlob))
+  for (const entry of await zip.getEntries()) {
+    const unzippedFilePath = path.join(cacheDir, entry.filename)
+    if (entry.directory) {
       return
     }
-
     if (!await hasAccess(path.dirname(unzippedFilePath))) {
       await fsp.mkdir(path.dirname(unzippedFilePath), { recursive: true })
     }
-
-    const execStream = entry.pipe(fs.createWriteStream(unzippedFilePath))
-    promiseChain.push(new Promise((resolve, reject) => {
-      execStream.on('close', () => resolve(unzippedFilePath))
-      execStream.on('error', reject)
-    }))
-  })
-
-  return Promise.all(promiseChain)
+    const content = await entry.getData<Blob>(new BlobWriter())
+    await writeFile(unzippedFilePath, content.stream())
+  }
 }
 
 /**
