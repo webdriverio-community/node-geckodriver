@@ -55,7 +55,7 @@
     "@types/tar-fs": "^2.0.4",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "@typescript-eslint/parser": "^7.7.1",
-    "@vitest/coverage-v8": "^1.5.2",
+    "@vitest/coverage-v8": "^2.0.2",
     "eslint": "^8.56.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-unicorn": "^54.0.0",
@@ -67,7 +67,7 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.7.3",
     "typescript": "^5.4.5",
-    "vitest": "^1.5.2",
+    "vitest": "^2.0.2",
     "wait-port": "^1.1.0",
     "webdriverio": "^8.36.1"
   },
