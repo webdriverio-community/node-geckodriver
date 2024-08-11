@@ -30,7 +30,10 @@ export async function start (params: GeckodriverParameters) {
   // User might pass a port for custom runs but they should modify them for each worker
   // For remaining use cases, to enable parallel instances we need to set the port to 0 (random)
   // Otherwise all instances try to connect to the default port and fail
-  startArgs.websocketPort = startArgs.websocketPort ?? 0
+  if (!startArgs.connectExisting) {
+    startArgs.websocketPort = startArgs.websocketPort ?? 0
+  }
+ 
 
   const args = parseParams(startArgs)
   log.info(`Starting Geckodriver at ${geckoDriverPath} with params: ${args.join(' ')}`)
