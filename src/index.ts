@@ -26,12 +26,18 @@ export async function start (params: GeckodriverParameters) {
 
   startArgs.host = startArgs.host || DEFAULT_HOSTNAME
 
-  // By default, Geckodriver uses port 9222
-  // User might pass a port for custom runs but they should modify them for each worker
-  // For remaining use cases, to enable parallel instances we need to set the port to 0 (random)
-  // Otherwise all instances try to connect to the default port and fail
-  if (!startArgs.connectExisting) {
-    startArgs.websocketPort = startArgs.websocketPort ?? 0
+  // By default, Geckodriver uses port 9222.
+  // Users may specify a custom port for individual runs, but they need to modify it for each worker.
+  // For other cases, to enable parallel instances, we need to set the port to 0 (random).
+  // Otherwise, all instances will attempt to connect to the default port and fail.
+  // If both --connect-existing and --websocket-port are used together, an error is thrown.
+  // However, if --connect-existing is not used and --websocket-port is not specified, the websocketPort is set to 0.
+  if (startArgs.connectExisting && startArgs.websocketPort) {
+    throw new Error(
+      "Cannot use --connect-existing and --websocket-port together"
+    );
+  } else if (!startArgs.connectExisting && !startArgs.websocketPort) {
+    startArgs.websocketPort = 0;
   }
  
 
