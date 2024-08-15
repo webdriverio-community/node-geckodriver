@@ -64,6 +64,7 @@ try {
   await waitPort({ port })
   const browser = await remote({
     automationProtocol: 'webdriver',
+    hostname: '0.0.0.0',
     port, // must set port or wdio will automatically start geckodriver
     capabilities: {
       browserName: 'firefox',
