@@ -78,3 +78,9 @@ export interface GeckodriverParameters {
    */
   cacheDir?: string
 }
+
+declare global {
+  namespace WebdriverIO {
+    interface GeckodriverOptions extends GeckodriverParameters { }
+  }
+}

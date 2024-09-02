@@ -34,12 +34,11 @@ export async function start (params: GeckodriverParameters) {
   // However, if --connect-existing is not used and --websocket-port is not specified, the websocketPort is set to 0.
   if (startArgs.connectExisting && startArgs.websocketPort) {
     throw new Error(
-      "Cannot use --connect-existing and --websocket-port together"
-    );
+      'Cannot use --connect-existing and --websocket-port together'
+    )
   } else if (!startArgs.connectExisting && !startArgs.websocketPort) {
-    startArgs.websocketPort = 0;
+    startArgs.websocketPort = 0
   }
- 
 
   const args = parseParams(startArgs)
   log.info(`Starting Geckodriver at ${geckoDriverPath} with params: ${args.join(' ')}`)
