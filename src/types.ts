@@ -80,6 +80,11 @@ export interface GeckodriverParameters {
    */
   cacheDir?: string
 
+  /**
+   * options to be passed into the process.
+   * @see options in https://nodejs.org/api/child_process.html#child_processspawncommand-args-options
+   * @default undefined
+   */
   spawnOpts?: SpawnOpt
 }
 
