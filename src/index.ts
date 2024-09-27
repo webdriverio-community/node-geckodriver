@@ -9,7 +9,7 @@ import type { GeckodriverParameters } from './types.js'
 const log = logger('geckodriver')
 
 export async function start (params: GeckodriverParameters) {
-  const { cacheDir, customGeckoDriverPath, ...startArgs } = params
+  const { cacheDir, customGeckoDriverPath, spawnOpts, ...startArgs } = params
   let geckoDriverPath = (
     customGeckoDriverPath ||
     process.env.GECKODRIVER_PATH ||
@@ -42,7 +42,7 @@ export async function start (params: GeckodriverParameters) {
 
   const args = parseParams(startArgs)
   log.info(`Starting Geckodriver at ${geckoDriverPath} with params: ${args.join(' ')}`)
-  return cp.spawn(geckoDriverPath, args)
+  return cp.spawn(geckoDriverPath, args, spawnOpts)
 }
 
 export const download = downloadDriver

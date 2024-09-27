@@ -217,6 +217,15 @@ The path to the root of the cache directory.
 Type: `string`<br />
 Default: `process.env.GECKODRIVER_CACHE_DIR || os.tmpdir()`
 
+### `spawnOpts`
+Options to pass into the geckodriver process. This can be useful if needing
+Firefox to spawn with `MOZ_` prefix variables, such as `MOZ_HEADLESS_WIDTH`.
+See https://nodejs.org/api/child_process.html#child_processspawncommand-args-options for
+all options.
+
+Type: `SpawnOptionsWithoutStdio | SpawnOptionsWithStdioTuple`<br />
+Default: `undefined`
+
 # Other Browser Driver
 
 If you also look for other browser driver NPM wrappers, you can find them here:
