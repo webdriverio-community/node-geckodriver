@@ -223,7 +223,7 @@ Firefox to spawn with `MOZ_` prefix variables, such as `MOZ_HEADLESS_WIDTH`.
 See https://nodejs.org/api/child_process.html#child_processspawncommand-args-options for
 all options.
 
-Type: `[key: string]: string`<br />
+Type: `SpawnOptionsWithoutStdio | SpawnOptionsWithStdioTuple`<br />
 Default: `undefined`
 
 # Other Browser Driver
