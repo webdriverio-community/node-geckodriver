@@ -1,7 +1,8 @@
+import type { SpawnOptionsWithoutStdio, SpawnOptionsWithStdioTuple, StdioPipe, StdioNull } from 'node:child_process'
+
 export type LogLevel = 'fatal' | 'error' | 'warn' | 'info' | 'config' | 'debug' | 'trace'
 
-type SpawnOpt = { [key: string]: string | string[] | SpawnOpt }
-
+type StdioOption = StdioNull | StdioPipe
 export interface GeckodriverParameters {
   /**
    * List of hostnames to allow. By default the value of --host is allowed, and in addition if that's a well
@@ -85,7 +86,7 @@ export interface GeckodriverParameters {
    * @see options in https://nodejs.org/api/child_process.html#child_processspawncommand-args-options
    * @default undefined
    */
-  spawnOpts?: SpawnOpt
+  spawnOpts?: SpawnOptionsWithoutStdio | SpawnOptionsWithStdioTuple<StdioOption, StdioOption, StdioOption>
 }
 
 declare global {
