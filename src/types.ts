@@ -44,7 +44,7 @@ export interface GeckodriverParameters {
   /**
    * write server log to file instead of stderr, increases log level to INFO
    */
-  logNoTruncated?: boolean
+  logNoTruncate?: boolean
   /**
    * Host to use to connect to Gecko
    * @default 127.0.0.1
