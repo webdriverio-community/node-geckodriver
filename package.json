@@ -3,12 +3,20 @@
   "version": "4.5.1",
   "description": "Mozilla's Geckodriver for Node.js",
   "homepage": "https://github.com/webdriverio-community/node-geckodriver#readme",
+  "license": "MIT",
   "author": {
     "name": "vladikoff",
     "email": "vlad.filippov@gmail.com",
     "url": "http://vf.io"
   },
-  "license": "MPL-2.0",
+  "contributors": [{
+    "name": "Christian Bromann",
+    "url": "https://bromann.dev",
+    "email": "mail@bromann.dev"
+  }],
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "keywords": [
     "geckodriver",
     "webdriver"
@@ -28,8 +36,11 @@
     "test:e2e": "tsx ./tests/test.e2e.ts",
     "watch": "npm run build -- --watch"
   },
-  "engines": {
-    "node": "^16.13 || >=18 || >=20"
+  "bin": {
+    "geckodriver": "./bin/geckodriver.js"
+  },
+  "bugs": {
+    "url": "https://github.com/webdriverio-community/node-geckodriver/issues"
   },
   "type": "module",
   "types": "./dist/index.d.ts",
@@ -43,12 +54,6 @@
       },
       "./dist/cjs/index.js"
     ]
-  },
-  "bin": {
-    "geckodriver": "./bin/geckodriver.js"
-  },
-  "bugs": {
-    "url": "https://github.com/webdriverio-community/node-geckodriver/issues"
   },
   "devDependencies": {
     "@types/node": "^22.8.6",
