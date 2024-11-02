@@ -1,5 +1,5 @@
 import os from 'node:os'
-import { vi, test, expect } from 'vitest'
+import { vi, test, expect, afterEach } from 'vitest'
 import fetch from 'node-fetch'
 
 import { getDownloadUrl, parseParams, retryFetch } from '../src/utils.js'
@@ -7,13 +7,22 @@ import { getDownloadUrl, parseParams, retryFetch } from '../src/utils.js'
 vi.mock('node:os', () => ({
   default: {
     arch: vi.fn(),
-    platform: vi.fn()
+    platform: vi.fn(),
+    tmpdir: vi.fn(() => '/tmp')
   }
 }))
 
 vi.mock('node-fetch', () => ({
-  default: vi.fn()
+  default: vi.fn().mockResolvedValue({
+    status: 400,
+    text: () => Promise.resolve('foobar'),
+    json: () => Promise.resolve({ foo: 'bar' })
+  })
 }))
+
+afterEach(() => {
+  vi.mocked(fetch).mockReset()
+})
 
 test('getDownloadUrl', () => {
   vi.mocked(os.arch).mockReturnValue('arm')
@@ -34,6 +43,19 @@ test('getDownloadUrl', () => {
   vi.mocked(os.arch).mockReturnValue('arm64')
   vi.mocked(os.platform).mockReturnValue('darwin')
   expect(getDownloadUrl('0.33.0')).toMatchSnapshot()
+})
+
+test('download with proxy support', async () => {
+  vi.resetModules()
+  process.env.HTTPS_PROXY = 'https://proxy.com'
+  const { download } = await import('../src/install.js')
+  await download('stable').catch(() => {})
+  expect(fetch).toBeCalledWith(
+    expect.any(String),
+    expect.objectContaining({
+      agent: expect.any(Object)
+    })
+  )
 })
 
 test('parseParams', () => {

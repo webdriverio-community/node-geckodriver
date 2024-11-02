@@ -1,4 +1,4 @@
-import cp from 'node:child_process'
+import cp, { type ChildProcess } from 'node:child_process'
 import logger from '@wdio/logger'
 
 import { download as downloadDriver } from './install.js'
@@ -8,7 +8,7 @@ import type { GeckodriverParameters } from './types.js'
 
 const log = logger('geckodriver')
 
-export async function start (params: GeckodriverParameters) {
+export async function start (params: GeckodriverParameters): Promise<ChildProcess> {
   const { cacheDir, customGeckoDriverPath, spawnOpts, ...startArgs } = params
   let geckoDriverPath = (
     customGeckoDriverPath ||
