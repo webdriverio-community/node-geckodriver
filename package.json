@@ -82,7 +82,6 @@
     "http-proxy-agent": "^7.0.2",
     "https-proxy-agent": "^7.0.5",
     "node-fetch": "^3.3.2",
-    "tar-fs": "^3.0.6",
-    "which": "^5.0.0"
+    "tar-fs": "^3.0.6"
   }
 }
