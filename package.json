@@ -30,7 +30,7 @@
   "scripts": {
     "build": "tsc -b .",
     "clean": "rimraf ./node_modules package-lock.yaml ./dist",
-    "prepare": "husky install",
+    "prepare": "husky",
     "postinstall": "test -f ./dist/install.js && node ./dist/install.js || echo \"Skipping install, project not build!\"",
     "test": "run-s build test:*",
     "test:lint": "eslint",
