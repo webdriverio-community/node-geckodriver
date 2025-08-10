@@ -3,7 +3,6 @@ import util from 'node:util'
 import fs from 'node:fs/promises'
 
 import decamelize from 'decamelize'
-import fetch, { type RequestInit } from 'node-fetch'
 
 import { GECKODRIVER_DOWNLOAD_PATH } from './constants.js'
 import type { GeckodriverParameters } from './types.js'
@@ -46,7 +45,7 @@ export function parseParams(params: GeckodriverParameters) {
         .filter(Boolean)
 }
 
-export async function retryFetch(url: string, opts: RequestInit, retry: number = 3) {
+export async function retryFetch(url: string, opts: RequestInit = {}, retry = 3): Promise<Response> {
     while (retry > 0) {
         try {
             return await fetch(url, opts)
@@ -55,10 +54,10 @@ export async function retryFetch(url: string, opts: RequestInit, retry: number =
             if (retry === 0) {
                 throw e
             }
-
             await sleep(RETRY_DELAY)
         }
     }
+    throw new Error('Failed to fetch after retries')
 }
 
 function sleep(ms: number) {

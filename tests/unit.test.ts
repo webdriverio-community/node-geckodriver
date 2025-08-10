@@ -1,6 +1,5 @@
 import os from 'node:os'
 import { vi, test, expect, afterEach } from 'vitest'
-import fetch from 'node-fetch'
 
 import { getDownloadUrl, parseParams, retryFetch } from '../src/utils.js'
 
@@ -12,16 +11,14 @@ vi.mock('node:os', () => ({
     }
 }))
 
-vi.mock('node-fetch', () => ({
-    default: vi.fn().mockResolvedValue({
-        status: 400,
-        text: () => Promise.resolve('foobar'),
-        json: () => Promise.resolve({ foo: 'bar' })
-    })
+vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+    status: 400,
+    text: () => Promise.resolve('foobar'),
+    json: () => Promise.resolve({ foo: 'bar' })
 }))
 
 afterEach(() => {
-    vi.mocked(fetch).mockReset()
+    vi.mocked(globalThis.fetch).mockReset()
 })
 
 test('getDownloadUrl', () => {
@@ -46,11 +43,25 @@ test('getDownloadUrl', () => {
 })
 
 test('download with proxy support', async () => {
-    vi.resetModules()
+    // Ensure hasAccess always returns false so download always calls fetch
+    vi.mock('../src/utils.js', async () => {
+        const actual = await vi.importActual('../src/utils.js')
+        return {
+            ...actual,
+            hasAccess: vi.fn().mockResolvedValue(false)
+        }
+    })
     process.env.HTTPS_PROXY = 'https://proxy.com'
+    vi.resetModules()
+    const fetchSpy = vi.fn().mockResolvedValue({
+        status: 400,
+        text: () => Promise.resolve('foobar'),
+        json: () => Promise.resolve({ foo: 'bar' })
+    })
+    vi.stubGlobal('fetch', fetchSpy)
     const { download } = await import('../src/install.js')
     await download('stable').catch(() => {})
-    expect(fetch).toBeCalledWith(
+    expect(fetchSpy).toBeCalledWith(
         expect.any(String),
         expect.objectContaining({
             agent: expect.any(Object)
@@ -64,11 +75,11 @@ test('parseParams', () => {
 })
 
 test('retryFetch', async () => {
-    vi.mocked(fetch)
+    vi.mocked(globalThis.fetch)
         .mockRejectedValueOnce(new Error('request failed'))
         .mockRejectedValueOnce(new Error('request failed'))
         .mockResolvedValue('foobar' as any)
     expect(await retryFetch('foo', { bar: 'baz' } as any)).toBe('foobar')
-    expect(fetch).toHaveBeenCalledTimes(3)
-    expect(fetch).toHaveBeenCalledWith('foo', { bar: 'baz' })
+    expect(globalThis.fetch).toHaveBeenCalledTimes(3)
+    expect(globalThis.fetch).toHaveBeenCalledWith('foo', { bar: 'baz' })
 })
