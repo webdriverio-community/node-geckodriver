@@ -1,3 +1,5 @@
+import type { Agent as HttpAgent } from 'node:http'
+import type { Agent as HttpsAgent } from 'node:https'
 import os from 'node:os'
 import path from 'node:path'
 import util from 'node:util'
@@ -7,7 +9,6 @@ import zlib from 'node:zlib'
 
 import logger from '@wdio/logger'
 import tar from 'tar-fs'
-import { type RequestInit } from 'node-fetch'
 import { HttpsProxyAgent } from 'https-proxy-agent'
 import { HttpProxyAgent } from 'http-proxy-agent'
 
@@ -19,7 +20,9 @@ import { BlobReader, BlobWriter, ZipReader } from '@zip.js/zip.js'
 const log = logger('geckodriver')
 const streamPipeline = util.promisify(stream.pipeline)
 
-const fetchOpts: RequestInit = {}
+const fetchOpts: RequestInit & {
+    agent?: HttpAgent | HttpsAgent | InstanceType<typeof HttpsProxyAgent> | InstanceType<typeof HttpProxyAgent>
+} = {}
 if (process.env.HTTPS_PROXY) {
     fetchOpts.agent = new HttpsProxyAgent(process.env.HTTPS_PROXY)
 } else if (process.env.HTTP_PROXY) {
