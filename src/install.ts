@@ -36,8 +36,8 @@ export async function download (
     }
 
     /**
-   * get latest version of Geckodriver
-   */
+     * get latest version of Geckodriver
+     */
     if (!geckodriverVersion) {
         const res = await retryFetch(GECKODRIVER_CARGO_YAML, fetchOpts)
         const toml = await res.text()
