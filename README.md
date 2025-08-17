@@ -1,7 +1,7 @@
 Geckodriver [![CI](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/ci.yml/badge.svg)](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/ci.yml) [![Audit](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/audit.yml/badge.svg)](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/audit.yml)
 ==========
 
-An NPM wrapper for Mozilla's [Geckodriver](https://github.com/mozilla/geckodriver). It manages to download various (or the latest) Geckodriver versions and provides a programmatic interface to start and stop it within Node.js. __Note:__ this is a wrapper module. If you discover any bugs with Geckodriver, please report them in the [official repository](https://github.com/mozilla/geckodriver).
+An npm wrapper for Mozilla's [Geckodriver](https://github.com/mozilla/geckodriver). It manages to download various (or the latest) Geckodriver versions and provides a programmatic interface to start and stop it within Node.js. __Note:__ this is a wrapper module. If you discover any bugs with Geckodriver, please report them in the [official repository](https://github.com/mozilla/geckodriver).
 
 # Installing
 
@@ -17,7 +17,7 @@ Or install it globally:
 npm install -g geckodriver
 ```
 
-__Note:__ This installs a `geckodriver` shell script that runs the executable, but on Windows, [`selenium-webdriver`](https://www.npmjs.com/package/selenium-webdriver) looks for `geckodriver.exe`. To use a global installation of this package with [`selenium-webdriver`](https://www.npmjs.com/package/selenium-webdriver) on Windows, copy or link `geckodriver.exe` to a location on your `PATH` (such as the NPM bin directory) after installing this package:
+__Note:__ This installs a `geckodriver` shell script that runs the executable, but on Windows, [`selenium-webdriver`](https://www.npmjs.com/package/selenium-webdriver) looks for `geckodriver.exe`. To use a global installation of this package with [`selenium-webdriver`](https://www.npmjs.com/package/selenium-webdriver) on Windows, copy or link `geckodriver.exe` to a location on your `PATH` (such as the npm bin directory) after installing this package:
 
 ```sh
 mklink %USERPROFILE%\AppData\Roaming\npm\geckodriver.exe %USERPROFILE%\AppData\Roaming\npm\node_modules\geckodriver\geckodriver.exe
@@ -29,7 +29,7 @@ Once installed you can start Geckodriver via:
 npx geckodriver --port=4444
 ```
 
-By default, this package downloads Geckodriver when used for the first time through the CLI or the programmatic interface. If you like to download it as part of the NPM install process, set the `GECKODRIVER_AUTO_INSTALL` environment flag, e.g.:
+By default, this package downloads Geckodriver when used for the first time through the CLI or the programmatic interface. If you like to download it as part of the npm install process, set the `GECKODRIVER_AUTO_INSTALL` environment flag, e.g.:
 
 ```sh
 GECKODRIVER_AUTO_INSTALL=1 npm i
@@ -228,7 +228,7 @@ Default: `undefined`
 
 # Other Browser Driver
 
-If you also look for other browser driver NPM wrappers, you can find them here:
+If you also look for other browser driver npm wrappers, you can find them here:
 
 - Chrome: [giggio/node-chromedriver](https://github.com/giggio/node-chromedriver)
 - Microsoft Edge: [webdriverio-community/node-edgedriver](https://github.com/webdriverio-community/node-edgedriver)
