@@ -31,7 +31,7 @@
     "build": "tsc -b .",
     "clean": "rimraf ./node_modules package-lock.yaml ./dist",
     "prepare": "husky",
-    "postinstall": "test -f ./dist/install.js && node ./dist/install.js || echo \"Skipping install, project not build!\"",
+    "postinstall": "test -f ./dist/install.js && node ./dist/install.js || echo \"Skipping install, project not built!\"",
     "test": "run-s build test:*",
     "test:lint": "eslint",
     "test:unit": "vitest --run",
