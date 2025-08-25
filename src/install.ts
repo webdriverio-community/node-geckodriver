@@ -88,7 +88,12 @@ async function downloadZip(res: Awaited<ReturnType<typeof retryFetch>>, cacheDir
 /**
  * download on install
  */
-if (process.argv[1] && process.argv[1].endsWith('/dist/install.js') && process.env.GECKODRIVER_AUTO_INSTALL) {
+const installJsPath = path.join('dist', 'install.js')
+if (
+    process.argv[1] &&
+    path.normalize(process.argv[1]).endsWith(path.sep + installJsPath) &&
+    process.env.GECKODRIVER_AUTO_INSTALL
+) {
     await download().then(
         () => log.info('Success!'),
         (err) => log.error(`Failed to install Geckodriver: ${err.stack}`)
