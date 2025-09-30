@@ -2,15 +2,14 @@ import type { Agent as HttpAgent } from 'node:http'
 import type { Agent as HttpsAgent } from 'node:https'
 import os from 'node:os'
 import path from 'node:path'
-import util from 'node:util'
-import stream from 'node:stream'
+import { pipeline } from 'node:stream/promises'
 import fsp, { writeFile } from 'node:fs/promises'
 import zlib from 'node:zlib'
 
 import logger from '@wdio/logger'
-import tar from 'tar-fs'
 import { HttpsProxyAgent } from 'https-proxy-agent'
 import { HttpProxyAgent } from 'http-proxy-agent'
+import { unpackTar } from 'modern-tar/fs'
 
 import { BINARY_FILE, GECKODRIVER_CARGO_YAML } from './constants.js'
 import { hasAccess, getDownloadUrl, retryFetch } from './utils.js'
@@ -18,7 +17,6 @@ import { hasAccess, getDownloadUrl, retryFetch } from './utils.js'
 import { BlobReader, BlobWriter, ZipReader } from '@zip.js/zip.js'
 
 const log = logger('geckodriver')
-const streamPipeline = util.promisify(stream.pipeline)
 
 const fetchOpts: RequestInit & {
     agent?: HttpAgent | HttpsAgent | InstanceType<typeof HttpsProxyAgent> | InstanceType<typeof HttpProxyAgent>
@@ -63,7 +61,7 @@ export async function download (
     await fsp.mkdir(cacheDir, { recursive: true })
     await (url.endsWith('.zip')
         ? downloadZip(res, cacheDir)
-        : streamPipeline(res.body, zlib.createGunzip(), tar.extract(cacheDir)))
+        : pipeline(res.body, zlib.createGunzip(), unpackTar(cacheDir)))
 
     await fsp.chmod(binaryFilePath, '755')
     return binaryFilePath
