@@ -14,10 +14,11 @@ jobs:
       fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        node: # Node.js version https://github.com/nodejs/release#release-schedule
-          - 20 # Maintenance LTS
-          - 22 # Active LTS
-          - 24 # Current
+        node: # Node.js versions https://github.com/nodejs/release#release-schedule
+          - 20
+          - 22
+          - 24
+          - 25
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v5
