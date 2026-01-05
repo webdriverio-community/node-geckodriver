@@ -58,7 +58,7 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
+    "@types/node": "^25.0.3",
     "@vitest/coverage-v8": "^4.0.16",
     "@wdio/eslint": "^0.1.3",
     "eslint": "^9.39.2",
