@@ -9,7 +9,7 @@ import type { GeckodriverParameters } from './types.js'
 const log = logger('geckodriver')
 
 export async function start (params: GeckodriverParameters): Promise<ChildProcess> {
-    const { cacheDir, customGeckoDriverPath, spawnOpts, ...startArgs } = params
+    const { cacheDir, customGeckoDriverPath, spawnOpts, geckoDriverVersion, ...startArgs } = params
     let geckoDriverPath = (
         customGeckoDriverPath ||
     process.env.GECKODRIVER_PATH ||
@@ -17,7 +17,7 @@ export async function start (params: GeckodriverParameters): Promise<ChildProces
     process.env.GECKODRIVER_FILEPATH
     )
     if (!geckoDriverPath) {
-        geckoDriverPath = await downloadDriver(params.geckoDriverVersion, cacheDir)
+        geckoDriverPath = await downloadDriver(geckoDriverVersion, cacheDir)
     }
 
     if (!(await hasAccess(geckoDriverPath))) {
