@@ -42,7 +42,9 @@ jobs:
       - uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
           node-version-file: .nvmrc
-          registry-url: https://registry.npmjs.org
+      - name: Upgrade npm for OIDC trusted publishing
+        # trusted publishing (OIDC) requires npm >= 11.5.1
+        run: npm install -g npm@latest
       - name: Git Setup
         run: |
           git config --global user.email "bot@webdriver.io"
@@ -52,14 +54,15 @@ jobs:
       - name: Build
         run: npm run build
       - name: Release
+        # no NODE_AUTH_TOKEN: authentication is handled via OIDC trusted
+        # publishing (requires id-token: write + a trusted publisher configured
+        # for this package on npmjs.com)
         run: npx release-it ${{github.event.inputs.releaseType}} --github.release --ci --npm.skipChecks --no-git.requireCleanWorkingDir --npm.tag=${{github.event.inputs.distTag}}
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ github.event.inputs.preRelease == 'no' }}
       - name: Pre-Release
         run: npx release-it ${{github.event.inputs.releaseType}} --github.release --ci --npm.skipChecks --no-git.requireCleanWorkingDir --preRelease=alpha --github.preRelease --npm.tag=next
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ github.event.inputs.preRelease == 'yes' }}
