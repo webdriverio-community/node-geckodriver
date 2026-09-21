@@ -80,6 +80,6 @@
     "decamelize": "^6.0.1",
     "http-proxy-agent": "^7.0.2",
     "https-proxy-agent": "^7.0.6",
-    "modern-tar": "^0.7.3"
+    "modern-tar": "^0.8.5"
   }
 }
