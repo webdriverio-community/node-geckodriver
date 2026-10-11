@@ -1,4 +1,15 @@
-Geckodriver [![CI](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/ci.yml/badge.svg)](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/ci.yml) [![Audit](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/audit.yml/badge.svg)](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/audit.yml)
+> [!IMPORTANT]
+> **This repository is not maintained anymore.** The `geckodriver` package moved to
+> [`webdriverio/driver`](https://github.com/webdriverio/driver/tree/main/packages/node-geckodriver).
+> Version 7.0.0 and later are released from there.
+>
+> - The npm package name does not change: `npm install geckodriver`.
+> - Open issues and pull requests in [`webdriverio/driver`](https://github.com/webdriverio/driver/issues).
+> - To upgrade, read [Upgrading to geckodriver 8, edgedriver 8 and safaridriver 3](https://github.com/webdriverio/driver#upgrading-to-geckodriver-8-edgedriver-8-and-safaridriver-3).
+>
+> The code in this repository is for version 6.x and older.
+
+Geckodriver [![CI](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/ci.yml/badge.svg)](https://github.com/webdriverio-community/node-geckodriver/actions/workflows/ci.yml)
 ==========
 
 An npm wrapper for Mozilla's [Geckodriver](https://github.com/mozilla/geckodriver). It manages to download various (or the latest) Geckodriver versions and provides a programmatic interface to start and stop it within Node.js. __Note:__ this is a wrapper module. If you discover any bugs with Geckodriver, please report them in the [official repository](https://github.com/mozilla/geckodriver).
